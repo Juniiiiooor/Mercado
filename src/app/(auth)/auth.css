@@ -1,0 +1,233 @@
+/* ==========================================================================
+   Mercado do Bairro — telas de acesso (cadastro / login)
+   Layout em ficha dupla: formulário de um lado, painel de marca do outro.
+   ========================================================================== */
+
+.auth-page {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+  background: var(--bg);
+}
+
+.auth-form-side {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.4rem, 4vw, 3rem);
+  gap: 1.6rem;
+  overflow-y: auto;
+}
+
+.auth-form-wrap {
+  width: 100%;
+  max-width: 430px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.auth-head h1 {
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+}
+
+.auth-head p {
+  margin-top: 0.6rem;
+  color: var(--ink-2);
+}
+
+.auth-switch {
+  display: flex;
+  gap: 0.3rem;
+  padding: 0.28rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--panel);
+}
+
+.auth-switch a {
+  flex: 1;
+  text-align: center;
+  padding: 0.55rem 0.8rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.auth-switch a[aria-current="page"] {
+  background: var(--citrus);
+  color: var(--citrus-ink);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form .split {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.password-meter {
+  display: flex;
+  gap: 4px;
+  margin-top: 0.4rem;
+}
+
+.password-meter i {
+  height: 3px;
+  flex: 1;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  transition: background 0.2s ease;
+}
+
+.password-meter i[data-on="true"] {
+  background: var(--citrus);
+}
+
+.password-meter i[data-low="true"] {
+  background: var(--berry);
+}
+
+.alert {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  padding: 0.8rem 0.95rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--berry);
+  background: color-mix(in srgb, var(--berry) 12%, transparent);
+  color: var(--ink);
+  font-size: 0.88rem;
+}
+
+.alert-ok {
+  border-color: var(--citrus);
+  background: var(--citrus-soft);
+}
+
+/* ------------------------------------------------------- painel lateral ---- */
+
+.auth-brand-side {
+  position: relative;
+  overflow: hidden;
+  border-left: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.6rem, 3vw, 2.6rem);
+  background: var(--bg-soft);
+}
+
+.auth-brand-side img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
+}
+
+.auth-brand-side::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(200deg, #0b0c0ae6 10%, #0b0c0a99 55%, #0b0c0aee 100%);
+}
+
+.auth-brand-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  margin-top: auto;
+  color: #f4f5ef;
+}
+
+.auth-brand-content h2 {
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+}
+
+.auth-brand-content h2 em {
+  font-style: italic;
+  color: var(--citrus);
+}
+
+.auth-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-size: 0.92rem;
+}
+
+.auth-perks li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  color: #d7dacd;
+}
+
+.auth-perks svg {
+  width: 18px;
+  height: 18px;
+  color: var(--citrus);
+  margin-top: 0.18rem;
+}
+
+.demo-credentials {
+  position: relative;
+  z-index: 1;
+  border: 1px dashed #ffffff33;
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1rem;
+  font-size: 0.82rem;
+  color: #d7dacd;
+  background: #0b0c0a80;
+  backdrop-filter: blur(6px);
+}
+
+.demo-credentials b {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--citrus);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.demo-credentials code {
+  font-family: var(--font-mono);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .auth-page {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-brand-side {
+    order: -1;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+    min-height: 280px;
+    justify-content: flex-end;
+  }
+
+  .auth-brand-content {
+    margin-top: 0;
+  }
+
+  .auth-perks {
+    display: none;
+  }
+}

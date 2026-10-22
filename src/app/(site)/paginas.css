@@ -1,0 +1,154 @@
+/* ==========================================================================
+   Mercado do Bairro — páginas de conteúdo e de sistema
+   Listas de desejos, receitas e página 404.
+   ========================================================================== */
+
+/* ------------------------------------------------------------ receitas ---- */
+
+.recipe-hero {
+  display: grid;
+  gap: clamp(1.4rem, 4vw, 3rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  padding-block: clamp(1.6rem, 4vw, 3rem);
+}
+
+.recipe-hero-media {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+}
+
+.recipe-hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  counter-reset: step;
+}
+
+.recipe-steps li {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+
+.recipe-steps .step-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--citrus);
+}
+
+.recipe-steps h3 {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 650;
+  margin-bottom: 0.2rem;
+}
+
+.recipe-steps p {
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+
+/* -------------------------------------------------------------- 404 ---- */
+
+.notfound {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: var(--gutter);
+}
+
+.notfound-inner {
+  max-width: 46ch;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  align-items: center;
+}
+
+.notfound .big {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 16vw, 9rem);
+  line-height: 0.85;
+  color: var(--citrus);
+  letter-spacing: -0.06em;
+}
+
+/* -------------------------------------------------------- utilidades ---- */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 1.2rem;
+}
+
+.breadcrumb a:hover {
+  color: var(--citrus);
+}
+
+.two-col {
+  display: grid;
+  gap: clamp(1.2rem, 4vw, 2.6rem);
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+  align-items: start;
+  padding-block: clamp(1.2rem, 3vw, 2rem);
+}
+
+/* Ficha de receita: lista de ingredientes com preço por item. */
+.ingredient-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.ingredient-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px dashed var(--line);
+  font-size: 0.92rem;
+}
+
+.ingredient-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.ingredient-list .ing-name {
+  color: var(--ink);
+}
+
+.ingredient-list .ing-qty {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-left: 0.4rem;
+}
+
+@media (max-width: 900px) {
+  .recipe-hero,
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}

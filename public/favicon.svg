@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mercado do Bairro">
+  <rect width="64" height="64" rx="16" fill="#d7f45c" />
+  <path d="M18 44V22h6.4l7.6 11.2L39.6 22H46v22h-6V33.4l-6.6 9.4h-2.8L24 33.4V44z" fill="#171a10" />
+  <circle cx="50" cy="18" r="5" fill="#171a10" />
+</svg>

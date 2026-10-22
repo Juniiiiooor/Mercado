@@ -1,0 +1,488 @@
+/* ==========================================================================
+   Mercado do Bairro — página inicial (vitrine)
+   Composição editorial: abertura em grade assimétrica, categorias, ofertas,
+   destaques, história e bloco de acesso.
+   ========================================================================== */
+
+/* ------------------------------------------------------------- abertura ---- */
+
+.hero {
+  position: relative;
+  padding-block: clamp(2.4rem, 6vw, 5rem) clamp(2rem, 5vw, 3.6rem);
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  gap: clamp(1.6rem, 4vw, 3rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 34ch;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 6.4vw, 4.9rem);
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--citrus);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.8rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-stat b {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.hero-stat span {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* Composição de fotos: uma grande + duas menores sobrepostas. */
+.hero-collage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.7rem;
+}
+
+.hero-collage figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  position: relative;
+  background: var(--panel-2);
+}
+
+.hero-collage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-collage .shot-main {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 11;
+}
+
+.hero-collage .shot-a,
+.hero-collage .shot-b {
+  aspect-ratio: 1 / 1;
+}
+
+.hero-collage figcaption {
+  position: absolute;
+  left: 0.7rem;
+  bottom: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: #0b0c0acc;
+  color: #f4f5ef;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+}
+
+/* Selo redondo com texto curvo — detalhe de feira, difícil de "soar IA". */
+.hero-stamp {
+  position: absolute;
+  z-index: 2;
+  top: -18px;
+  left: -14px;
+  width: 116px;
+  height: 116px;
+  display: grid;
+  place-items: center;
+  animation: spin-slow 26s linear infinite;
+}
+
+.hero-stamp svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-stamp text {
+  font-family: var(--font-mono);
+  font-size: 8.4px;
+  letter-spacing: 0.24em;
+  fill: var(--citrus);
+  text-transform: uppercase;
+}
+
+.hero-stamp circle {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 0.6;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ------------------------------------------------------------ faixa ---- */
+
+.marquee {
+  border-block: 1px solid var(--line);
+  background: var(--bg-soft);
+  overflow: hidden;
+  padding-block: 0.85rem;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: marquee 34s linear infinite;
+}
+
+.marquee-track span {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.marquee-track span::after {
+  content: "◦";
+  color: var(--citrus);
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* -------------------------------------------------------- categorias ---- */
+
+.category-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.category-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.4rem;
+  min-height: 168px;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--citrus);
+}
+
+.category-card .icon {
+  font-size: 1.35rem;
+}
+
+.category-card h3 {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.category-card p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.category-card .count {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--citrus);
+}
+
+/* ------------------------------------------------------ ofertas/faixa ---- */
+
+.deal-strip {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.deal-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 0.9rem;
+  align-items: center;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(140deg, var(--panel-2), var(--panel));
+}
+
+.deal-card img {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.deal-card h3 {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.deal-card .deal-values {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+.deal-card .deal-values .price {
+  font-size: 1.15rem;
+  font-weight: 650;
+  color: var(--citrus);
+}
+
+.deal-timer {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+/* --------------------------------------------------------- história ---- */
+
+.story {
+  display: grid;
+  gap: clamp(1.4rem, 4vw, 3rem);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+}
+
+.story-media {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  aspect-ratio: 4 / 5;
+}
+
+.story-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.story-badge {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+  background: #0b0c0ad9;
+  border: 1px solid var(--line);
+  color: #f4f5ef;
+  backdrop-filter: blur(8px);
+}
+
+.story-badge b {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  color: var(--citrus);
+}
+
+.story-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 1.6rem;
+}
+
+.story-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.story-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.story-list .num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--citrus);
+  padding-top: 0.25rem;
+}
+
+.story-list h4 {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.story-list p {
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+
+/* ------------------------------------------------------ depoimentos ---- */
+
+.quote-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.quote {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+
+.quote blockquote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+.quote footer {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.quote .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--citrus-soft);
+  border: 1px solid var(--line);
+  color: var(--citrus);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+/* --------------------------------------------------------- chamada ---- */
+
+.cta {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.8rem, 5vw, 3.4rem);
+  background: linear-gradient(150deg, var(--panel-2), var(--bg-soft));
+  overflow: hidden;
+}
+
+.cta::after {
+  content: "";
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  right: -120px;
+  top: -140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--citrus-soft), transparent 68%);
+}
+
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: minmax(0, 1.2fr) auto;
+  align-items: center;
+}
+
+@media (max-width: 940px) {
+  .hero-grid,
+  .story,
+  .cta-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy {
+    max-width: none;
+  }
+
+  .hero-collage .shot-main {
+    aspect-ratio: 16 / 10;
+  }
+
+  .story-media {
+    aspect-ratio: 16 / 11;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-stamp,
+  .marquee-track {
+    animation: none;
+  }
+}

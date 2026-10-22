@@ -1,0 +1,518 @@
+/* ==========================================================================
+   Mercado do Bairro — área logada (tela principal do sistema)
+   Estrutura: barra lateral de navegação + conteúdo com abas
+   (Visão geral, Catálogo, Pedidos, Conta).
+   ========================================================================== */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 246px minmax(0, 1fr);
+  min-height: 100dvh;
+}
+
+/* ------------------------------------------------------------ sidebar ---- */
+
+.app-side {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  padding: 1.3rem 1rem;
+  border-right: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+
+.app-side-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding-inline: 0.35rem;
+}
+
+.app-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.app-nav a,
+.app-nav button {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.62rem 0.75rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+
+.app-nav a:hover,
+.app-nav button:hover {
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.app-nav a[aria-current="page"],
+.app-nav button[aria-current="page"] {
+  background: var(--citrus-soft);
+  color: var(--citrus);
+  font-weight: 600;
+}
+
+.app-nav svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+.app-nav .nav-label {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 1rem 0.75rem 0.35rem;
+}
+
+.app-side-foot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.member-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem;
+  background: linear-gradient(150deg, var(--panel-2), var(--panel));
+}
+
+.member-card .tier {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--citrus);
+}
+
+.member-card .points {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  margin-top: 0.2rem;
+}
+
+.member-card small {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+/* --------------------------------------------------------- conteúdo ---- */
+
+.app-main {
+  min-width: 0;
+  padding: clamp(1.1rem, 3vw, 2.2rem) clamp(1.1rem, 3vw, 2.6rem)
+    clamp(3rem, 6vw, 4.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+.app-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.app-topbar h1 {
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+}
+
+.app-topbar .sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+.app-topbar-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Abas de navegação interna (renderizadas como links com âncora). */
+.tabbar {
+  display: flex;
+  gap: 0.3rem;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: none;
+}
+
+.tabbar::-webkit-scrollbar {
+  display: none;
+}
+
+.tabbar a {
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+
+.tabbar a:hover {
+  color: var(--ink);
+}
+
+.tabbar a[aria-current="page"] {
+  color: var(--ink);
+  border-bottom-color: var(--citrus);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------ indicadores ---- */
+
+.stat-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.stat {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem;
+  background: var(--panel);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.stat .label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stat .value {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.stat .delta {
+  font-size: 0.8rem;
+  color: var(--citrus);
+}
+
+.stat .delta.muted {
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------- recompra ---- */
+
+.reorder-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.reorder-card {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+
+.reorder-card img {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.reorder-card h3 {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.reorder-card p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+
+.reorder-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --------------------------------------------------------- catálogo ---- */
+
+.catalog-toolbar {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.search-shell {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+
+.search-shell svg {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.search-shell .input {
+  padding-left: 2.6rem;
+}
+
+.filter-row {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  padding-bottom: 0.2rem;
+  scrollbar-width: none;
+}
+
+.filter-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------------------------------------------------------- pedidos ---- */
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.order-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  overflow: hidden;
+}
+
+.order-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel-2);
+}
+
+.order-head .id {
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.order-head .when {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.order-body {
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.order-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+
+.order-line .name {
+  color: var(--ink);
+}
+
+.order-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0 1.1rem 1.1rem;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-2);
+}
+
+.status-pill[data-status="em-rota"] {
+  border-color: var(--citrus);
+  color: var(--citrus);
+}
+
+.status-pill[data-status="entregue"] {
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+.track {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0 1.1rem 1.1rem;
+}
+
+.track i {
+  flex: 1;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+}
+
+.track i[data-done="true"] {
+  background: var(--citrus);
+}
+
+/* ----------------------------------------------------------- conta ---- */
+
+.account-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: start;
+}
+
+.account-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.account-card h3 {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.account-card .kvs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+}
+
+.account-card .kvs div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px dashed var(--line);
+}
+
+.account-card .kvs div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.account-card .kvs dt {
+  color: var(--muted);
+}
+
+.account-card .kvs dd {
+  margin: 0;
+  text-align: right;
+}
+
+/* ------------------------------------------------------- responsivo ---- */
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .app-side {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .app-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.4rem;
+    scrollbar-width: none;
+  }
+
+  .app-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .app-nav .nav-label,
+  .member-card {
+    display: none;
+  }
+
+  .app-nav a,
+  .app-nav button {
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .app-side-foot {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
