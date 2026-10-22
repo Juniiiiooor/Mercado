@@ -382,26 +382,50 @@ Acervos usados: **Wikimedia Commons** (CC0, CC BY, CC BY-SA, domínio público) 
 
 ## Publicando no GitHub
 
-O `.gitignore` já cobre `node_modules`, `.next`, arquivos `.env`, logs e
-pastas de editor. As imagens em `public/` **são versionadas** — são necessárias
-para o site funcionar.
+O `.gitignore` cobre `node_modules`, `.next`, arquivos `.env`, logs e pastas de
+editor. As imagens em `public/` **são versionadas** — são necessárias para o site
+funcionar.
+
+O repositório já está publicado em
+[github.com/Juniiiiooor/Mercado](https://github.com/Juniiiiooor/Mercado), com duas
+branches:
+
+- **`main`** — versão estável, é a que vai para produção.
+- **`dev`** — trabalho em andamento; as mudanças chegam na `main` por pull request.
 
 ```bash
-git init
+# clonar
+git clone git@github.com:Juniiiiooor/Mercado.git
+cd Mercado
+
+# trabalhar sempre na dev
+git checkout dev
+# ...editar...
 git add .
-git commit -m "feat: vitrine, cadastro/login e painel do cliente"
-git branch -M main
-git remote add origin https://github.com/<seu-usuario>/<seu-repo>.git
-git push -u origin main
+git commit -m "feat: descreva a mudança"
+git push
 ```
 
 ### Deploy na Vercel
 
-1. Importe o repositório em [vercel.com/new](https://vercel.com/new).
-2. O preset de Next.js é detectado automaticamente — nenhuma configuração extra.
-3. Se for usar domínio próprio, defina `NEXT_PUBLIC_SITE_URL` com a URL final.
-4. Deploy. O build roda `next build` e gera as 26 fichas de produto como páginas
+O projeto está pronto para deploy contínuo: a cada `push`, a Vercel reconstrói o
+site. A configuração fica em `vercel.json` (framework `nextjs`, região `gru1` —
+São Paulo — e cabeçalhos de segurança).
+
+Para ligar o repositório à Vercel:
+
+1. Acesse [vercel.com/new](https://vercel.com/new) e importe
+   `Juniiiiooor/Mercado`.
+2. O preset de **Next.js** é detectado sozinho; não mexa em build nem output.
+3. Em *Settings → Git*, defina **Production Branch** como `main`. Assim a `dev`
+   gera **Preview Deployments** (URLs de teste em cada push) e só a `main` publica
+   em produção.
+4. Se for usar domínio próprio, defina `NEXT_PUBLIC_SITE_URL` com a URL final.
+5. Deploy. O build roda `next build` e gera as 25 fichas de produto como páginas
    estáticas.
+
+> Alternativa por linha de comando: `npx vercel` (a primeira execução pede login e
+> vincula o projeto). Requer o Vercel CLI, que não vem instalado por padrão.
 
 ---
 
