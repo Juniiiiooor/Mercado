@@ -50,8 +50,6 @@ export type Category = {
   name: string;
   slug: string;
   blurb: string;
-  /** Emoji usado como suporte visual; a foto do destaque é sempre editorial. */
-  icon: string;
 };
 
 /** Linha do carrinho. */

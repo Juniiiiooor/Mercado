@@ -35,6 +35,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: enableJsScript }} />
       </head>
       <body>
+        <div className="bg-atmosphere" aria-hidden="true" />
+        <div className="grain-overlay" aria-hidden="true" />
         <ThemeProvider>
           <AccountProvider>
             <CartProvider>{children}</CartProvider>
