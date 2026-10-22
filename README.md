@@ -170,8 +170,12 @@ autenticação precisa acontecer no servidor.
 │   │
 │   └── types/domain.ts        # Product, Order, User, Category…
 │
+├── .github/workflows/
+│   └── test.yml               # CI: lint, test, build, segurança e portão
+│
 ├── eslint.config.mjs
 ├── next.config.ts
+├── vercel.json                # deploy (framework, região, headers)
 ├── tsconfig.json
 └── .gitignore
 ```
@@ -426,6 +430,59 @@ Para ligar o repositório à Vercel:
 
 > Alternativa por linha de comando: `npx vercel` (a primeira execução pede login e
 > vincula o projeto). Requer o Vercel CLI, que não vem instalado por padrão.
+
+---
+
+## Testes automáticos (GitHub Actions)
+
+O workflow [`.github/workflows/test.yml`](.github/workflows/test.yml) roda sozinho a
+cada `push` e em todo pull request. O fluxo é:
+
+```
+Desenvolvedor → Commit → Push → GitHub Actions
+                                     │
+              ┌──────────┬───────────┼───────────┐
+              ▼          ▼           ▼           ▼
+            Lint       Test        Build     Segurança
+              │          │           │           │
+              └──────────┴─────┬─────┴───────────┘
+                               ▼
+                      Verificar código
+                               │
+                               ▼
+                            Deploy
+```
+
+- **Lint** — `npm run lint` (ESLint);
+- **Test** — `npm run typecheck` (tipos do TypeScript);
+- **Build** — `npm run build` (build de produção, com as 35 páginas);
+- **Segurança** — `npm audit` em modo informativo (aparece no log, mas não
+  derruba o pipeline: as pendências atuais são de dependências de desenvolvimento,
+  transitivas do ESLint, sem correção sem quebra);
+- **Verificar código** — job final que só passa se os quatro anteriores passarem.
+  É **este** o check exigido pela proteção de branch.
+
+Os jobs de lint, test e build rodam **em paralelo** (mais rápido). Há cache do npm e
+cancelamento automático de execuções antigas da mesma branch.
+
+Para rodar exatamente o que o CI roda, antes de dar `push`:
+
+```bash
+npm run lint && npm run typecheck && npm run build
+```
+
+### Bloquear o merge de verdade (proteção de branch)
+
+O workflow aponta o erro, mas quem impede o merge é uma regra de proteção no
+GitHub. Configure uma vez, no repositório:
+
+1. **Settings → Branches → Add branch protection rule**.
+2. Em *Branch name pattern*, use `main` (repita para `dev` se quiser proteger
+   também).
+3. Marque **Require a pull request before merging**.
+4. Marque **Require status checks to pass before merging** e selecione o check
+   **“Verificar código”** (nome do job final do workflow).
+5. Salve. A partir daí, um PR só é mesclado com o CI verde.
 
 ---
 
