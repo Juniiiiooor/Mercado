@@ -170,8 +170,12 @@ autenticação precisa acontecer no servidor.
 │   │
 │   └── types/domain.ts        # Product, Order, User, Category…
 │
+├── .github/workflows/
+│   └── test.yml               # CI: typecheck + lint + build
+│
 ├── eslint.config.mjs
 ├── next.config.ts
+├── vercel.json                # deploy (framework, região, headers)
 ├── tsconfig.json
 └── .gitignore
 ```
@@ -426,6 +430,40 @@ Para ligar o repositório à Vercel:
 
 > Alternativa por linha de comando: `npx vercel` (a primeira execução pede login e
 > vincula o projeto). Requer o Vercel CLI, que não vem instalado por padrão.
+
+---
+
+## Testes automáticos (GitHub Actions)
+
+O workflow [`.github/workflows/test.yml`](.github/workflows/test.yml) roda sozinho
+a cada `push` e em todo pull request. Ele executa, nesta ordem:
+
+1. `npm run typecheck` — checagem de tipos do TypeScript;
+2. `npm run lint` — análise estática do ESLint;
+3. `npm run build` — build de produção, que também pré-renderiza as 25 fichas.
+
+Se qualquer passo falhar, o **check fica vermelho** e o pull request não deve ser
+mesclado. Também há cache do npm e cancelamento automático de execuções antigas da
+mesma branch.
+
+Para rodar exatamente o que o CI roda, antes de dar `push`:
+
+```bash
+npm run typecheck && npm run lint && npm run build
+```
+
+### Bloquear o merge de verdade (proteção de branch)
+
+O workflow aponta o erro, mas quem impede o merge é uma regra de proteção no
+GitHub. Configure uma vez, no repositório:
+
+1. **Settings → Branches → Add branch protection rule**.
+2. Em *Branch name pattern*, use `main` (repita para `dev` se quiser proteger
+   também).
+3. Marque **Require a pull request before merging**.
+4. Marque **Require status checks to pass before merging** e selecione o check
+   **“Verificar código”** (nome do job do workflow).
+5. Salve. A partir daí, um PR só é mesclado com o CI verde.
 
 ---
 
