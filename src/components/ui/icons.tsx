@@ -189,6 +189,16 @@ export function IconMoon(props: Props) {
   );
 }
 
+export function IconLock(props: Props) {
+  return (
+    <Svg {...props}>
+      <rect x="4.5" y="10.5" width="15" height="10" rx="2.4" />
+      <path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" />
+      <path d="M12 14.2v2.6" />
+    </Svg>
+  );
+}
+
 /* ---- Ícones dos corredores (categorias) — traço próprio, sem emoji ---- */
 
 /** Hortifrúti: folha com nervura central. */

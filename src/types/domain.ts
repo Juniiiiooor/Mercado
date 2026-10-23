@@ -1,5 +1,5 @@
 /**
- * Modelos de domínio do Mercado do Bairro.
+ * Modelos de domínio do Mercadinho da Praça.
  *
  * Nesta demo os tipos descrevem as entidades usadas tanto no catálogo
  * (dados estáticos em `src/data`) quanto na conta do cliente

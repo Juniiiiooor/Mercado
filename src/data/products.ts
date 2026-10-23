@@ -86,7 +86,7 @@ export const products: Product[] = [
   {
     id: "cebola",
     name: "Cebola nacional",
-    brand: "Mercado do Bairro",
+    brand: "Mercadinho da Praça",
     category: "hortifruti",
     price: 7.4,
     unit: "kg",

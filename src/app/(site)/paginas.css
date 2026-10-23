@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Mercado do Bairro — páginas de conteúdo e de sistema
+   Mercadinho da Praça — páginas de conteúdo e de sistema
    Listas de desejos, receitas e página 404.
    ========================================================================== */
 
@@ -46,7 +46,7 @@
 .recipe-steps .step-num {
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  color: var(--citrus);
+  color: var(--accent);
 }
 
 .recipe-steps h3 {
@@ -83,7 +83,7 @@
   font-family: var(--font-display);
   font-size: clamp(4rem, 16vw, 9rem);
   line-height: 0.85;
-  color: var(--citrus);
+  color: var(--accent);
   letter-spacing: -0.06em;
 }
 
@@ -102,7 +102,7 @@
 }
 
 .breadcrumb a:hover {
-  color: var(--citrus);
+  color: var(--accent);
 }
 
 .two-col {

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Mercado do Bairro — layout
+   Mercadinho da Praça — layout
    Cabeçalho, navegação, rodapé, carrinho lateral e grades de produto.
    ========================================================================== */
 
@@ -44,8 +44,8 @@
   width: 30px;
   height: 30px;
   border-radius: 10px;
-  background: var(--citrus);
-  color: var(--citrus-ink);
+  background: var(--accent);
+  color: var(--accent-ink);
   font-family: var(--font-mono);
   font-size: 0.82rem;
   font-weight: 700;
@@ -84,7 +84,7 @@
   right: 100%;
   bottom: 0;
   height: 1.5px;
-  background: var(--citrus);
+  background: var(--accent);
   transition: right 0.24s ease;
 }
 
@@ -133,8 +133,8 @@
   display: grid;
   place-items: center;
   border-radius: var(--radius-pill);
-  background: var(--citrus);
-  color: var(--citrus-ink);
+  background: var(--accent);
+  color: var(--accent-ink);
   font-family: var(--font-mono);
   font-size: 0.68rem;
   font-weight: 700;
@@ -171,7 +171,7 @@
 }
 
 .top-strip strong {
-  color: var(--citrus);
+  color: var(--accent);
   font-weight: 600;
 }
 
@@ -212,7 +212,7 @@
 }
 
 .footer-grid a:hover {
-  color: var(--citrus);
+  color: var(--accent);
 }
 
 .footer-bottom {
@@ -234,13 +234,66 @@
   margin-top: 0.9rem;
 }
 
+/* Faixa de confiança do rodapé: selos de segurança, entrega e pagamento. */
+.footer-trust {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+  padding-block: 1.1rem;
+  border-top: 1px solid var(--line);
+}
+
+.footer-trust-list {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+
+.footer-trust-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.footer-trust-list svg {
+  width: 17px;
+  height: 17px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.footer-trust-list b {
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+.footer-pay {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.footer-pay-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 /* ----------------------------------------------- carrinho lateral ---- */
 
 .drawer-backdrop {
   position: fixed;
   inset: 0;
   z-index: 60;
-  background: #05060399;
+  background: #04070a99;
   backdrop-filter: blur(3px);
   animation: fade-in 0.2s ease;
 }
@@ -315,7 +368,7 @@
 .meter span {
   display: block;
   height: 100%;
-  background: var(--citrus);
+  background: var(--accent);
   transition: width 0.3s ease;
 }
 
@@ -400,8 +453,8 @@
 }
 
 .qty button:hover:not(:disabled) {
-  background: var(--citrus);
-  color: var(--citrus-ink);
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .qty button:disabled {
@@ -425,7 +478,7 @@
   border: 1px solid transparent;
   border-radius: var(--radius);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--panel) 92%, var(--citrus) 3%), var(--panel)) padding-box,
+    linear-gradient(180deg, color-mix(in srgb, var(--panel) 92%, var(--accent) 3%), var(--panel)) padding-box,
     linear-gradient(160deg, var(--line-strong), var(--line) 46%, transparent 80%) border-box;
   overflow: hidden;
   transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.28s ease;
@@ -449,7 +502,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent 58%, #0b0c0a4d);
+  background: linear-gradient(180deg, transparent 58%, #080a0d4d);
 }
 
 .product-media img {
@@ -499,7 +552,7 @@
 }
 
 .product-name a:hover {
-  color: var(--citrus);
+  color: var(--accent);
 }
 
 .product-meta {
@@ -552,9 +605,9 @@
 }
 
 .add-btn:hover {
-  background: var(--citrus);
-  border-color: var(--citrus);
-  color: var(--citrus-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
 .add-btn svg {

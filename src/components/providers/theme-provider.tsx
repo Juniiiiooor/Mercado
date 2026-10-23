@@ -41,7 +41,7 @@ function publishTheme(next: Theme) {
 /**
  * Preferência de cor do site.
  *
- * O tema padrão é escuro ("dark com acento cítrico"), mas a pessoa pode
+ * O tema padrão é escuro ("dark com acento azul"), mas a pessoa pode
  * alternar para claro — a escolha fica salva apenas se for manual.
  */
 export function ThemeProvider({ children }: { children: ReactNode }) {

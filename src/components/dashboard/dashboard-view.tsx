@@ -111,9 +111,9 @@ export function DashboardView() {
       <aside className="app-side">
         <div className="app-side-head">
           <Link href="/" className="brand">
-            <span className="brand-mark">mb</span>
+            <span className="brand-mark">mp</span>
             <span>
-              Mercado <em>do</em> Bairro
+              Mercadinho <em>da</em> Praça
             </span>
           </Link>
         </div>

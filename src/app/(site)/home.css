@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Mercado do Bairro — página inicial (vitrine)
+   Mercadinho da Praça — página inicial (vitrine)
    Composição editorial: abertura em grade assimétrica, categorias, ofertas,
    destaques, história e bloco de acesso.
    ========================================================================== */
@@ -12,7 +12,7 @@
   overflow: hidden;
 }
 
-/* Brilho cítrico atrás do texto + vinheta que fecha a composição. */
+/* Brilho azul atrás do texto + vinheta que fecha a composição. */
 .hero::before {
   content: "";
   position: absolute;
@@ -21,7 +21,7 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(38rem 26rem at 22% 34%, var(--citrus-glow), transparent 66%),
+    radial-gradient(38rem 26rem at 22% 34%, var(--accent-glow), transparent 66%),
     radial-gradient(30rem 22rem at 74% 12%, var(--berry-glow), transparent 68%);
   filter: blur(4px);
 }
@@ -61,7 +61,7 @@
 .hero h1 em {
   font-style: italic;
   font-weight: 500;
-  color: var(--citrus);
+  color: var(--accent);
   position: relative;
 }
 
@@ -75,7 +75,7 @@
   height: 0.42em;
   z-index: -1;
   border-radius: 3px;
-  background: linear-gradient(90deg, var(--citrus-glow), transparent 92%);
+  background: linear-gradient(90deg, var(--accent-glow), transparent 92%);
   transform: rotate(-1.2deg);
 }
 
@@ -103,7 +103,7 @@
   font-family: var(--font-mono);
   font-size: 1.55rem;
   font-weight: 600;
-  color: var(--citrus);
+  color: var(--accent);
   letter-spacing: -0.03em;
 }
 
@@ -176,8 +176,8 @@
   bottom: 0.7rem;
   padding: 0.3rem 0.6rem;
   border-radius: var(--radius-pill);
-  background: #0b0c0acc;
-  color: #f4f5ef;
+  background: #080a0dcc;
+  color: #eef4f8;
   font-family: var(--font-mono);
   font-size: 0.64rem;
   letter-spacing: 0.1em;
@@ -207,7 +207,7 @@
   font-family: var(--font-mono);
   font-size: 8.4px;
   letter-spacing: 0.24em;
-  fill: var(--citrus);
+  fill: var(--accent);
   text-transform: uppercase;
 }
 
@@ -228,7 +228,7 @@
 .marquee {
   border-block: 1px solid var(--line);
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--bg-soft) 88%, var(--citrus) 12%), var(--bg-soft) 40%, var(--bg-soft) 60%, color-mix(in srgb, var(--bg-soft) 88%, var(--citrus) 12%));
+    linear-gradient(90deg, color-mix(in srgb, var(--bg-soft) 88%, var(--accent) 12%), var(--bg-soft) 40%, var(--bg-soft) 60%, color-mix(in srgb, var(--bg-soft) 88%, var(--accent) 12%));
   overflow: hidden;
   padding-block: 0.95rem;
 }
@@ -253,7 +253,7 @@
 
 .marquee-track span::after {
   content: "◦";
-  color: var(--citrus);
+  color: var(--accent);
 }
 
 @keyframes marquee {
@@ -276,15 +276,36 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 1.6rem;
-  min-height: 196px;
-  padding: 1.25rem;
+  min-height: 220px;
+  padding: 1.3rem;
   border: 1px solid transparent;
   border-radius: var(--radius);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--panel-2) 84%, var(--citrus) 6%), var(--panel)) padding-box,
+    linear-gradient(180deg, color-mix(in srgb, var(--panel-2) 84%, var(--accent) 6%), var(--panel)) padding-box,
     linear-gradient(150deg, var(--line-strong), var(--line) 46%, transparent 82%) border-box;
   overflow: hidden;
   transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.28s ease;
+}
+
+/* Numeração do corredor, como as gôndolas numeradas da loja. */
+.category-grid {
+  counter-reset: corredor;
+}
+
+.category-card {
+  counter-increment: corredor;
+}
+
+.category-card::after {
+  content: "0" counter(corredor);
+  position: absolute;
+  top: 1.15rem;
+  right: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  opacity: 0.55;
 }
 
 /* Brilho que nasce no canto ao passar o mouse. */
@@ -296,7 +317,7 @@
   top: -120px;
   right: -110px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--citrus-glow), transparent 68%);
+  background: radial-gradient(circle, var(--accent-glow), transparent 68%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -314,26 +335,26 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
   border: 1px solid var(--line-strong);
   background: linear-gradient(160deg, var(--panel-2), var(--panel));
-  color: var(--citrus);
+  color: var(--accent);
   transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.28s ease,
     background 0.28s ease, color 0.28s ease;
 }
 
 .category-card .icon svg {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
 }
 
 .category-card:hover .icon {
   transform: rotate(-4deg) scale(1.06);
-  border-color: var(--citrus);
-  background: var(--citrus);
-  color: var(--citrus-ink);
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .category-card h3 {
@@ -354,7 +375,7 @@
   font-size: 0.68rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--citrus);
+  color: var(--accent);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -423,7 +444,7 @@
 .deal-card .deal-values .price {
   font-size: 1.15rem;
   font-weight: 650;
-  color: var(--citrus);
+  color: var(--accent);
 }
 
 .deal-timer {
@@ -459,14 +480,14 @@
   object-fit: cover;
 }
 
-/* Moldura cítrica deslocada — profundidade editorial. */
+/* Moldura azul deslocada — profundidade editorial. */
 .story-media::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent 52%, #0b0c0ab8);
+  background: linear-gradient(180deg, transparent 52%, #080a0db8);
 }
 
 .story-badge {
@@ -475,9 +496,9 @@
   bottom: 1rem;
   padding: 0.8rem 1rem;
   border-radius: var(--radius-sm);
-  background: #0b0c0ad9;
+  background: #080a0dd9;
   border: 1px solid var(--line);
-  color: #f4f5ef;
+  color: #eef4f8;
   backdrop-filter: blur(8px);
 }
 
@@ -485,7 +506,7 @@
   display: block;
   font-family: var(--font-mono);
   font-size: 1.4rem;
-  color: var(--citrus);
+  color: var(--accent);
 }
 
 .story-list {
@@ -511,7 +532,7 @@
 .story-list .num {
   font-family: var(--font-mono);
   font-size: 0.72rem;
-  color: var(--citrus);
+  color: var(--accent);
   padding-top: 0.25rem;
 }
 
@@ -543,7 +564,7 @@
   border: 1px solid transparent;
   border-radius: var(--radius);
   background:
-    linear-gradient(165deg, color-mix(in srgb, var(--panel-2) 90%, var(--citrus) 4%), var(--panel)) padding-box,
+    linear-gradient(165deg, color-mix(in srgb, var(--panel-2) 90%, var(--accent) 4%), var(--panel)) padding-box,
     linear-gradient(155deg, var(--line-strong), var(--line) 50%, transparent 86%) border-box;
   transition: transform 0.24s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.24s ease;
 }
@@ -556,7 +577,7 @@
   font-family: var(--font-display);
   font-size: 4.4rem;
   line-height: 1;
-  color: var(--citrus);
+  color: var(--accent);
   opacity: 0.16;
 }
 
@@ -587,9 +608,9 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--citrus-soft);
+  background: var(--accent-soft);
   border: 1px solid var(--line);
-  color: var(--citrus);
+  color: var(--accent);
   font-family: var(--font-mono);
   font-size: 0.75rem;
 }
@@ -602,7 +623,7 @@
   border-radius: var(--radius-lg);
   padding: clamp(1.8rem, 5vw, 3.4rem);
   background:
-    linear-gradient(150deg, color-mix(in srgb, var(--panel-2) 82%, var(--citrus) 8%), var(--bg-soft));
+    linear-gradient(150deg, color-mix(in srgb, var(--panel-2) 82%, var(--accent) 8%), var(--bg-soft));
   overflow: hidden;
   box-shadow: var(--shadow-glow);
 }
@@ -629,7 +650,7 @@
   right: -140px;
   top: -170px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--citrus-glow), transparent 68%);
+  background: radial-gradient(circle, var(--accent-glow), transparent 68%);
 }
 
 .cta-inner {

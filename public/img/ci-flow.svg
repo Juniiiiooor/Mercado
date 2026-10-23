@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 720" role="img" aria-labelledby="titulo-fluxo desc-fluxo" font-family="'Inter', system-ui, -apple-system, sans-serif">
+  <title id="titulo-fluxo">Fluxo de integração contínua do Mercadinho da Praça</title>
+  <desc id="desc-fluxo">Desenvolvedor gera um commit e faz push; o GitHub Actions roda Lint, Test e Build em paralelo, depois Segurança e, só então, o Deploy.</desc>
+
+  <defs>
+    <linearGradient id="g-accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4fc3f7"/>
+      <stop offset="1" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <linearGradient id="g-panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#172029"/>
+      <stop offset="1" stop-color="#121820"/>
+    </linearGradient>
+    <linearGradient id="g-actions" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#18242e"/>
+      <stop offset="1" stop-color="#111a22"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#1d7ca8"/>
+    </marker>
+    <marker id="arrow-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4fc3f7"/>
+    </marker>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+
+  <!-- fundo -->
+  <rect width="760" height="720" rx="22" fill="#080a0d"/>
+  <g stroke="#25303a" stroke-width="1" opacity="0.35">
+    <path d="M0 60H760M0 120H760M0 180H760M0 240H760M0 300H760M0 360H760M0 420H760M0 480H760M0 540H760M0 600H760M0 660H760"/>
+    <path d="M60 0V720M120 0V720M180 0V720M240 0V720M300 0V720M360 0V720M420 0V720M480 0V720M540 0V720M600 0V720M660 0V720M720 0V720"/>
+  </g>
+
+  <!-- título -->
+  <text x="40" y="58" fill="#eef4f8" font-size="26" font-weight="700" letter-spacing="-0.5">Fluxo de CI · Mercadinho da Praça</text>
+  <text x="40" y="84" fill="#7f8f9d" font-size="14" font-family="'JetBrains Mono', ui-monospace, monospace" letter-spacing="1.5">PUSH · PULL REQUEST · GITHUB ACTIONS</text>
+  <line x1="40" y1="104" x2="720" y2="104" stroke="#25303a"/>
+
+  <!-- caixa reutilizável: passos lineares -->
+  <!-- 1. Desenvolvedor -->
+  <g filter="url(#soft)">
+    <rect x="280" y="130" width="200" height="58" rx="14" fill="url(#g-panel)" stroke="#364454"/>
+  </g>
+  <text x="380" y="156" fill="#eef4f8" font-size="16" font-weight="600" text-anchor="middle">Desenvolvedor</text>
+  <text x="380" y="175" fill="#7f8f9d" font-size="12" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace">escreve o código</text>
+
+  <!-- seta 1 -->
+  <line x1="380" y1="192" x2="380" y2="222" stroke="#1d7ca8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 2. Commit -->
+  <g filter="url(#soft)">
+    <rect x="280" y="226" width="200" height="52" rx="14" fill="url(#g-panel)" stroke="#364454"/>
+  </g>
+  <text x="380" y="258" fill="#eef4f8" font-size="16" font-weight="600" text-anchor="middle">Commit</text>
+
+  <line x1="380" y1="282" x2="380" y2="312" stroke="#1d7ca8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 3. Push -->
+  <g filter="url(#soft)">
+    <rect x="280" y="316" width="200" height="52" rx="14" fill="url(#g-panel)" stroke="#364454"/>
+  </g>
+  <text x="380" y="348" fill="#eef4f8" font-size="16" font-weight="600" text-anchor="middle">Push</text>
+
+  <line x1="380" y1="372" x2="380" y2="402" stroke="#1d7ca8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 4. GitHub Actions (container) -->
+  <g filter="url(#soft)">
+    <rect x="120" y="406" width="520" height="196" rx="18" fill="url(#g-actions)" stroke="#364454"/>
+  </g>
+  <text x="140" y="436" fill="#4fc3f7" font-size="15" font-weight="700" letter-spacing="0.5">GitHub Actions</text>
+  <text x="620" y="436" fill="#7f8f9d" font-size="11" text-anchor="end" font-family="'JetBrains Mono', ui-monospace, monospace">JOBS EM PARALELO</text>
+
+  <!-- 3 jobs em paralelo -->
+  <g filter="url(#soft)">
+    <rect x="146" y="456" width="140" height="66" rx="12" fill="#111a22" stroke="#25303a"/>
+    <rect x="310" y="456" width="140" height="66" rx="12" fill="#111a22" stroke="#25303a"/>
+    <rect x="474" y="456" width="140" height="66" rx="12" fill="#111a22" stroke="#25303a"/>
+  </g>
+  <text x="216" y="486" fill="#eef4f8" font-size="16" font-weight="600" text-anchor="middle">Lint</text>
+  <text x="216" y="506" fill="#7f8f9d" font-size="11" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace">eslint .</text>
+  <text x="380" y="486" fill="#eef4f8" font-size="16" font-weight="600" text-anchor="middle">Test</text>
+  <text x="380" y="506" fill="#7f8f9d" font-size="11" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace">tsc --noEmit</text>
+  <text x="544" y="486" fill="#eef4f8" font-size="16" font-weight="600" text-anchor="middle">Build</text>
+  <text x="544" y="506" fill="#7f8f9d" font-size="11" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace">next build</text>
+
+  <!-- conectores do Actions para os 3 jobs -->
+  <path d="M380 402 V440" stroke="#1d7ca8" stroke-width="2"/>
+  <path d="M216 440 H544" stroke="#1d7ca8" stroke-width="2"/>
+  <path d="M216 440 V452" stroke="#1d7ca8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M380 440 V452" stroke="#1d7ca8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M544 440 V452" stroke="#1d7ca8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- merge dos 3 jobs -->
+  <path d="M216 522 V548 H544 V522" fill="none" stroke="#1d7ca8" stroke-width="2"/>
+  <path d="M380 548 V572" stroke="#1d7ca8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 5. Segurança -->
+  <g filter="url(#soft)">
+    <rect x="280" y="576" width="200" height="54" rx="14" fill="url(#g-panel)" stroke="#364454"/>
+  </g>
+  <text x="380" y="600" fill="#eef4f8" font-size="16" font-weight="600" text-anchor="middle">Segurança</text>
+  <text x="380" y="619" fill="#7f8f9d" font-size="11" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace">npm audit · informativo</text>
+
+  <line x1="380" y1="630" x2="380" y2="656" stroke="#4fc3f7" stroke-width="2" marker-end="url(#arrow-accent)"/>
+
+  <!-- 6. Deploy -->
+  <g filter="url(#soft)">
+    <rect x="280" y="660" width="200" height="46" rx="14" fill="url(#g-accent)" stroke="#29b6f6"/>
+  </g>
+  <text x="380" y="689" fill="#062231" font-size="16" font-weight="700" text-anchor="middle">Deploy</text>
+</svg>
