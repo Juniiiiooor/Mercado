@@ -33,7 +33,7 @@ Thumbs.db
 desktop.ini
 *.swp
 
-# Arquivos temporarios com URLs da Caitá
+# Arquivos temporarios com URLs externas
 caita_products_from_cache.txt
 caita_produtos_urls.txt
 caita-baixados.txt

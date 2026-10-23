@@ -1,7 +1,7 @@
-/* ==========================================================================
-   Mercadinho da Praça — página inicial (vitrine)
-   Composição editorial: abertura em grade assimétrica, categorias, ofertas,
-   destaques, história e bloco de acesso.
+﻿/* ==========================================================================
+   Mercadinho da PraÃ§a â€” pÃ¡gina inicial (vitrine)
+   ComposiÃ§Ã£o editorial: abertura em grade assimÃ©trica, categorias, ofertas,
+   destaques, histÃ³ria e bloco de acesso.
    ========================================================================== */
 
 /* ------------------------------------------------------------- abertura ---- */
@@ -12,7 +12,7 @@
   overflow: hidden;
 }
 
-/* Brilho azul atrás do texto + vinheta que fecha a composição. */
+/* Brilho azul atrÃ¡s do texto + vinheta que fecha a composiÃ§Ã£o. */
 .hero::before {
   content: "";
   position: absolute;
@@ -65,7 +65,7 @@
   position: relative;
 }
 
-/* Sublinhado desenhado à mão sob a palavra em destaque. */
+/* Sublinhado desenhado Ã  mÃ£o sob a palavra em destaque. */
 .hero h1 em::after {
   content: "";
   position: absolute;
@@ -112,7 +112,7 @@
   color: var(--muted);
 }
 
-/* Composição de fotos: uma grande + duas menores sobrepostas. */
+/* ComposiÃ§Ã£o de fotos: uma grande + duas menores sobrepostas. */
 .hero-collage {
   position: relative;
   display: grid;
@@ -185,7 +185,7 @@
   backdrop-filter: blur(6px);
 }
 
-/* Selo redondo com texto curvo — detalhe de feira, difícil de "soar IA". */
+/* Selo redondo com texto curvo â€” detalhe de feira, difÃ­cil de "soar IA". */
 .hero-stamp {
   position: absolute;
   z-index: 2;
@@ -252,7 +252,7 @@
 }
 
 .marquee-track span::after {
-  content: "◦";
+  content: "â—¦";
   color: var(--accent);
 }
 
@@ -287,7 +287,7 @@
   transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.28s ease;
 }
 
-/* Numeração do corredor, como as gôndolas numeradas da loja. */
+/* NumeraÃ§Ã£o do corredor, como as gÃ´ndolas numeradas da loja. */
 .category-grid {
   counter-reset: corredor;
 }
@@ -383,7 +383,7 @@
 
 /* Seta que desliza ao passar o mouse. */
 .category-card .count::after {
-  content: "→";
+  content: "â†’";
   transition: transform 0.28s ease;
 }
 
@@ -456,7 +456,7 @@
   margin-top: 0.4rem;
 }
 
-/* --------------------------------------------------------- história ---- */
+/* --------------------------------------------------------- histÃ³ria ---- */
 
 .story {
   display: grid;
@@ -480,7 +480,7 @@
   object-fit: cover;
 }
 
-/* Moldura azul deslocada — profundidade editorial. */
+/* Moldura azul deslocada â€” profundidade editorial. */
 .story-media::after {
   content: "";
   position: absolute;
@@ -570,7 +570,7 @@
 }
 
 .quote::before {
-  content: "“";
+  content: "â€œ";
   position: absolute;
   top: 0.5rem;
   right: 1rem;
@@ -628,7 +628,7 @@
   box-shadow: var(--shadow-glow);
 }
 
-/* Malha fina que dá textura ao bloco de chamada. */
+/* Malha fina que dÃ¡ textura ao bloco de chamada. */
 .cta::before {
   content: "";
   position: absolute;
@@ -686,5 +686,391 @@
   .hero-stamp,
   .marquee-track {
     animation: none;
+  }
+}
+
+/* ==========================================================================
+   Vitrine no padrÃ£o da referÃªncia: banner, grade de categorias, ofertas,
+   destaques e newsletter. Estilos das classes usadas em page.tsx.
+   ========================================================================== */
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.section-head-center {
+  justify-content: center;
+  text-align: center;
+}
+
+.section-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-deep);
+}
+
+.section-link:hover {
+  text-decoration: underline;
+}
+
+.section-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ------------------------------------------------------------- banner ---- */
+
+.promo-banner {
+  padding-block: 1rem 0;
+}
+
+.promo-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--panel-2);
+  aspect-ratio: 1920 / 520;
+  min-height: 200px;
+}
+
+.promo-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #0dab5ce6 0%, #0dab5c99 42%, #0dab5c1a 72%, transparent 100%);
+  pointer-events: none;
+}
+
+.promo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.promo-copy {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: clamp(1rem, 4vw, 3rem);
+  max-width: 640px;
+  color: #ffffff;
+}
+
+.promo-kicker {
+  display: inline-block;
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: #ffffff2e;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.promo-copy h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.4vw, 2.6rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 18px #0b3b1f4d;
+}
+
+.promo-copy p {
+  font-size: clamp(0.82rem, 1.2vw, 1rem);
+  color: #ffffffd9;
+}
+
+.promo-copy .btn {
+  margin-top: 0.5rem;
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--accent-deep);
+}
+
+.promo-copy .btn:hover {
+  background: var(--accent-soft);
+  border-color: #ffffff;
+  color: var(--accent-deep);
+}
+
+/* ---------------------------------------------------------- categorias ---- */
+
+.home-category-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.home-category-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--panel-2);
+  aspect-ratio: 253 / 400;
+  box-shadow: var(--shadow-sm);
+}
+
+.home-category-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, #111827a6 100%);
+  pointer-events: none;
+}
+
+.home-category-media {
+  width: 100%;
+  height: 100%;
+}
+
+.home-category-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.home-category-card:hover .home-category-media img {
+  transform: scale(1.05);
+}
+
+.home-category-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.85rem;
+  z-index: 1;
+  padding-inline: 0.6rem;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  text-shadow: 0 1px 6px #11182780;
+}
+
+/* ------------------------------------------------------------- ofertas --- */
+
+.home-deals {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.home-deal-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.home-deal-card:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow);
+}
+
+.home-deal-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  background: var(--panel-2);
+  overflow: hidden;
+}
+
+.home-deal-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.6rem;
+  transition: transform 0.4s ease;
+}
+
+.home-deal-card:hover .home-deal-media img {
+  transform: scale(1.04);
+}
+
+.deal-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.18rem 0.45rem;
+  border-radius: var(--radius-xs);
+  background: var(--promo);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.home-deal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.7rem 0.8rem 0.9rem;
+}
+
+.home-deal-brand {
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.home-deal-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  min-height: 2.3em;
+}
+
+.home-deal-name a:hover {
+  color: var(--accent-deep);
+}
+
+.home-deal-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-top: 0.15rem;
+}
+
+.home-deal-price .price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-deep);
+}
+
+.home-deal-price .price-was {
+  font-size: 0.76rem;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+/* ---------------------------------------------------------- newsletter --- */
+
+.newsletter {
+  display: grid;
+  gap: 0.9rem 1.4rem;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.9fr);
+  align-items: center;
+  padding: clamp(1.2rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(120deg, var(--accent-soft), #ffffff 60%);
+}
+
+.newsletter h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.newsletter p {
+  margin-top: 0.35rem;
+  font-size: 0.86rem;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.newsletter-form input {
+  flex: 1;
+  min-width: 180px;
+  height: 44px;
+  padding: 0 0.9rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+.newsletter-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.newsletter-done {
+  flex-basis: 100%;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-deep);
+}
+
+.newsletter-legal {
+  grid-column: 1 / -1;
+  font-size: 0.72rem !important;
+  color: var(--muted) !important;
+}
+
+/* ---------------------------------------------------------- responsivo --- */
+
+@media (max-width: 1100px) {
+  .home-category-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .home-deals {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 780px) {
+  .home-category-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-deals {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .newsletter {
+    grid-template-columns: 1fr;
+  }
+
+  .promo-frame {
+    aspect-ratio: 16 / 7;
+  }
+}
+
+@media (max-width: 520px) {
+  .home-category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-deals {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

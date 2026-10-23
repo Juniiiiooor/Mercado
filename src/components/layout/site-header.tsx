@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
-import type { FormEvent } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCart } from "@/components/providers/cart-provider";

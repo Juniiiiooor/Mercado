@@ -38,12 +38,18 @@ export type Product = {
 };
 
 export type CategoryId =
-  | "hortifruti"
-  | "padaria"
-  | "laticinios"
-  | "mercearia"
+  | "acougue"
+  | "frios-laticinios"
   | "bebidas"
-  | "proteinas";
+  | "hortifruti"
+  | "mercearia"
+  | "limpeza"
+  | "higiene"
+  | "padaria"
+  | "saudaveis"
+  | "pet-shop"
+  | "bazar"
+  | "congelados";
 
 export type Category = {
   id: CategoryId;

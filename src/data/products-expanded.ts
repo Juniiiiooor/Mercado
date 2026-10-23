@@ -1,5 +1,5 @@
 import type { Product } from "@/types/domain";
-import { products as baseProducts } from "./products";
+import { products as baseProducts } from "./products-base";
 
 const extraProducts: Product[] = [
   {
