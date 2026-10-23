@@ -1,28 +1,31 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
+import type { FormEvent } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCart } from "@/components/providers/cart-provider";
 import { useAccount } from "@/components/providers/account-provider";
-import { useTheme } from "@/components/providers/theme-provider";
-import { IconCart, IconClose, IconMenu, IconMoon, IconSun, IconUser } from "@/components/ui/icons";
+import { categories } from "@/data/categories";
+import { IconCart, IconClose, IconMenu, IconSearch, IconUser } from "@/components/ui/icons";
 import { formatPrice } from "@/lib/format";
 
-/** Navegação principal da vitrine. */
-const links = [
-  { href: "/mercado", label: "Mercado" },
-  { href: "/#categorias", label: "Categorias" },
-  { href: "/receitas", label: "Receitas" },
-  { href: "/lista", label: "Lista de desejos" },
+/** Atalhos da faixa de serviços, abaixo da barra de categorias. */
+const serviceLinks = [
+  { href: "/mercado", label: "Recomprar pedido" },
+  { href: "/lista", label: "Meus favoritos" },
+  { href: "/painel", label: "Meus cupons" },
+  { href: "/receitas", label: "Central de informações" },
 ];
 
 export function SiteHeader() {
   const { summary, openCart, isOpen, closeCart, qtyOf, setQty } = useCart();
   const { user } = useAccount();
-  const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
+  const [query, setQuery] = useState("");
   const [menuState, setMenuState] = useState<{ open: boolean; path: string }>({
     open: false,
     path: pathname,
@@ -42,9 +45,6 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // O menu móvel se fecha sozinho quando a rota muda: guardamos a rota em que
-  // ele foi aberto e só o consideramos aberto enquanto ela for a rota atual.
-
   // Bloqueia o scroll do fundo enquanto o carrinho está aberto.
   useEffect(() => {
     if (!isOpen) return;
@@ -63,6 +63,12 @@ export function SiteHeader() {
     return () => window.removeEventListener("keydown", onKey);
   }, [closeCart]);
 
+  function submitSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const term = query.trim();
+    router.push(term ? `/mercado?busca=${encodeURIComponent(term)}` : "/mercado");
+  }
+
   return (
     <>
       <div className="top-strip">
@@ -76,17 +82,13 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <header
-        className="site-header"
-        data-scrolled={scrolled}
-        data-open={menuOpen}
-      >
-        <div className="shell header-inner">
+      <header className="site-header" data-scrolled={scrolled} data-open={menuOpen}>
+        <div className="shell header-main">
           <button
             type="button"
             className="icon-btn menu-toggle"
             aria-expanded={menuOpen}
-            aria-controls="menu-principal"
+            aria-controls="categorias-principais"
             onClick={() => setMenuOpen((open) => !open)}
           >
             {menuOpen ? (
@@ -97,56 +99,97 @@ export function SiteHeader() {
           </button>
 
           <Link href="/" className="brand" aria-label="Mercadinho da Praça, página inicial">
-            <span className="brand-mark">mp</span>
-            <span>
+            <span className="brand-mark" aria-hidden="true">
+              mp
+            </span>
+            <span className="brand-name">
               Mercadinho <em>da</em> Praça
             </span>
           </Link>
 
-          <nav className="header-nav" id="menu-principal" aria-label="Navegação principal">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                aria-current={pathname === link.href ? "page" : undefined}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          <form className="header-search" role="search" onSubmit={submitSearch}>
+            <label className="sr-only" htmlFor="busca-site">
+              Buscar produtos
+            </label>
+            <input
+              id="busca-site"
+              name="busca"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Leite, arroz, pão, vinho, frutas..."
+              autoComplete="off"
+            />
+            <button type="submit" aria-label="Buscar produtos">
+              <IconSearch />
+            </button>
+          </form>
 
           <div className="header-actions">
-            <button
-              type="button"
-              className="icon-btn"
-              onClick={toggleTheme}
-              aria-label={theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}
-            >
-              {theme === "dark" ? <IconSun /> : <IconMoon />}
-            </button>
-
             <Link
               href={user ? "/painel" : "/entrar"}
-              className="icon-btn"
+              className="header-account"
               aria-label={user ? `Conta de ${user.name}` : "Entrar ou criar conta"}
             >
               <IconUser />
+              <span className="header-action-text">
+                <small>{user ? `Olá, ${user.name.split(" ")[0]}` : "Bem-vindo"}</small>
+                <strong>{user ? "Minha conta" : "Entrar"}</strong>
+              </span>
             </Link>
 
             <button
               type="button"
-              className="icon-btn"
+              className="header-cart"
               ref={cartRef}
               onClick={openCart}
               aria-label={`Abrir carrinho, ${summary.count} ${summary.count === 1 ? "item" : "itens"}`}
             >
-              <IconCart />
-              {summary.count > 0 && (
-                <span className="cart-count" aria-hidden="true">
-                  {summary.count}
-                </span>
-              )}
+              <span className="header-cart-icon">
+                <IconCart />
+                {summary.count > 0 && (
+                  <span className="cart-count" aria-hidden="true">
+                    {summary.count}
+                  </span>
+                )}
+              </span>
+              <span className="header-action-text">
+                <small>Meu carrinho</small>
+                <strong>{formatPrice(summary.subtotal)}</strong>
+              </span>
             </button>
+          </div>
+        </div>
+
+        <nav className="catbar" id="categorias-principais" aria-label="Categorias">
+          <div className="shell">
+            <Link href="/mercado" className="catbar-all" onClick={() => setMenuOpen(false)}>
+              <IconMenu /> Categorias
+            </Link>
+            <div className="catbar-links">
+              {categories.map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/mercado?categoria=${category.id}`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {category.name}
+                </Link>
+              ))}
+              <Link href="/receitas" onClick={() => setMenuOpen(false)}>
+                Receitas
+              </Link>
+            </div>
+          </div>
+        </nav>
+
+        <div className="header-services">
+          <div className="shell">
+            {serviceLinks.map((link) => (
+              <Link key={link.label} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </header>

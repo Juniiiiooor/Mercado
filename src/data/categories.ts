@@ -1,46 +1,81 @@
 import type { Category } from "@/types/domain";
 
 /**
- * Seis corredores do mercado, na ordem em que aparecem na navegação.
- * O suporte visual de cada corredor é um ícone de linha (ver
- * `components/ui/category-icon.tsx`), escolhido pelo `id`.
+ * Corredores principais, organizados para aproximar da navegação do site
+ * de referência (estudo acadêmico de clone visual).
  */
 export const categories: Category[] = [
   {
-    id: "hortifruti",
-    name: "Hortifrúti",
-    slug: "hortifruti",
-    blurb: "Fruta, verdura e legume colhidos na semana.",
+    id: "acougue",
+    name: "Açougue",
+    slug: "acougue",
+    blurb: "Carnes, aves e linguiças selecionadas.",
   },
   {
-    id: "padaria",
-    name: "Padaria",
-    slug: "padaria",
-    blurb: "Fermentação natural e fornadas do dia.",
-  },
-  {
-    id: "laticinios",
+    id: "frios-laticinios",
     name: "Frios e laticínios",
-    slug: "frios-laticinios",
-    blurb: "Queijo, leite e manteiga de produtores locais.",
-  },
-  {
-    id: "mercearia",
-    name: "Mercearia",
-    slug: "mercearia",
-    blurb: "Despensa abastecida sem conservantes desnecessários.",
+    slug: "frios-e-laticinios",
+    blurb: "Queijos, frios, leite e derivados.",
   },
   {
     id: "bebidas",
     name: "Bebidas",
     slug: "bebidas",
-    blurb: "Sucos, fermentados e água de verdade.",
+    blurb: "Sucos, águas, refrigerantes e fermentados.",
   },
   {
-    id: "proteinas",
-    name: "Açougue e peixaria",
-    slug: "acougue-peixaria",
-    blurb: "Corte na hora, com rastreio de origem.",
+    id: "hortifruti",
+    name: "Hortifruti",
+    slug: "hortifruti",
+    blurb: "Frutas, verduras e legumes frescos.",
+  },
+  {
+    id: "mercearia",
+    name: "Mercearia alimentos",
+    slug: "mercearia-alimentos",
+    blurb: "Arroz, feijão, massas e itens da despensa.",
+  },
+  {
+    id: "limpeza",
+    name: "Limpeza",
+    slug: "limpeza",
+    blurb: "Produtos para casa e lavanderia.",
+  },
+  {
+    id: "higiene",
+    name: "Higiene",
+    slug: "higiene",
+    blurb: "Cuidados pessoais e beleza.",
+  },
+  {
+    id: "padaria",
+    name: "Padaria",
+    slug: "padaria",
+    blurb: "Pães, bolos e produtos fresquinhos.",
+  },
+  {
+    id: "saudaveis",
+    name: "Saudáveis",
+    slug: "saudaveis",
+    blurb: "Integrais, naturais e funcionais.",
+  },
+  {
+    id: "pet-shop",
+    name: "Pet shop",
+    slug: "pet-shop",
+    blurb: "Produtos para cães, gatos e outros pets.",
+  },
+  {
+    id: "bazar",
+    name: "Bazar",
+    slug: "bazar",
+    blurb: "Utensílios, descartáveis e utilidades.",
+  },
+  {
+    id: "congelados",
+    name: "Congelados",
+    slug: "congelados",
+    blurb: "Prontos, vegetais e sobremesas congeladas.",
   },
 ];
 

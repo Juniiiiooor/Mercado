@@ -29,8 +29,8 @@ function subscribeTheme(listener: () => void) {
 }
 
 function getThemeSnapshot(): Theme {
-  if (typeof document === "undefined") return "dark";
-  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+  if (typeof document === "undefined") return "light";
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
 function publishTheme(next: Theme) {
@@ -41,11 +41,11 @@ function publishTheme(next: Theme) {
 /**
  * Preferência de cor do site.
  *
- * O tema padrão é escuro ("dark com acento azul"), mas a pessoa pode
- * alternar para claro — a escolha fica salva apenas se for manual.
+ * O tema padrão é claro (verde de supermercado), seguindo a referência visual
+ * do estudo; o atributo `data-theme` fica no `<html>`.
  */
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, () => "dark" as Theme);
+  const theme = useSyncExternalStore(subscribeTheme, getThemeSnapshot, () => "light" as Theme);
 
   const setTheme = useCallback((next: Theme) => publishTheme(next), []);
 

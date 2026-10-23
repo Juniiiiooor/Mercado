@@ -53,7 +53,7 @@ export function applyTheme(theme: "dark" | "light"): void {
   writeStorage(THEME_STORAGE_KEY, theme);
 }
 
-export function readTheme(fallback: "dark" | "light" = "dark"): "dark" | "light" {
+export function readTheme(fallback: "dark" | "light" = "light"): "dark" | "light" {
   const stored = readStorage<"dark" | "light" | null>(THEME_STORAGE_KEY, null);
   return stored === "light" || stored === "dark" ? stored : fallback;
 }

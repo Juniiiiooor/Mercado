@@ -30,13 +30,11 @@ const enableJsScript = `document.documentElement.classList.remove("no-js");`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" data-theme="dark" className={`no-js ${fontClassName}`}>
+    <html lang="pt-BR" data-theme="light" className={`no-js ${fontClassName}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: enableJsScript }} />
       </head>
       <body>
-        <div className="bg-atmosphere" aria-hidden="true" />
-        <div className="grain-overlay" aria-hidden="true" />
         <ThemeProvider>
           <AccountProvider>
             <CartProvider>{children}</CartProvider>

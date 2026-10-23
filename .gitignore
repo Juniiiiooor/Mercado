@@ -33,6 +33,13 @@ Thumbs.db
 desktop.ini
 *.swp
 
+# Arquivos temporarios com URLs da Caitá
+caita_products_from_cache.txt
+caita_produtos_urls.txt
+caita-baixados.txt
+caita-prod.txt
+caita-urls.txt
+
 # ---- Vercel / Netlify ----
 .vercel
 .netlify
