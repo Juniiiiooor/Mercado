@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Mercado do Bairro — área logada (tela principal do sistema)
+   Mercadinho da Praça — área logada (tela principal do sistema)
    Estrutura: barra lateral de navegação + conteúdo com abas
    (Visão geral, Catálogo, Pedidos, Conta).
    ========================================================================== */
@@ -63,8 +63,8 @@
 
 .app-nav a[aria-current="page"],
 .app-nav button[aria-current="page"] {
-  background: var(--citrus-soft);
-  color: var(--citrus);
+  background: var(--accent-soft);
+  color: var(--accent);
   font-weight: 600;
 }
 
@@ -102,7 +102,7 @@
   font-size: 0.66rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--citrus);
+  color: var(--accent);
 }
 
 .member-card .points {
@@ -178,7 +178,7 @@
 
 .tabbar a[aria-current="page"] {
   color: var(--ink);
-  border-bottom-color: var(--citrus);
+  border-bottom-color: var(--accent);
   font-weight: 600;
 }
 
@@ -217,7 +217,7 @@
 
 .stat .delta {
   font-size: 0.8rem;
-  color: var(--citrus);
+  color: var(--accent);
 }
 
 .stat .delta.muted {
@@ -393,8 +393,8 @@
 }
 
 .status-pill[data-status="em-rota"] {
-  border-color: var(--citrus);
-  color: var(--citrus);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .status-pill[data-status="entregue"] {
@@ -417,7 +417,7 @@
 }
 
 .track i[data-done="true"] {
-  background: var(--citrus);
+  background: var(--accent);
 }
 
 /* ----------------------------------------------------------- conta ---- */

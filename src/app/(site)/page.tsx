@@ -3,6 +3,7 @@ import { ProductShowcase } from "@/components/shop/product-showcase";
 import { categories } from "@/data/categories";
 import { discountOf, getDeals, getFeaturedProducts, getProductsByCategory } from "@/data/products";
 import { formatPrice } from "@/lib/format";
+import { CategoryIcon } from "@/components/ui/category-icon";
 import { IconArrowRight, IconCheck, IconClock, IconLeaf, IconTruck } from "@/components/ui/icons";
 
 const marqueeItems = [
@@ -136,7 +137,7 @@ export default function HomePage() {
           {categories.map((category) => (
             <Link key={category.id} href={`/mercado?categoria=${category.id}`} className="category-card">
               <span className="icon" aria-hidden="true">
-                {category.icon}
+                <CategoryIcon id={category.id} />
               </span>
               <div>
                 <h3>{category.name}</h3>

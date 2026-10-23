@@ -1,8 +1,8 @@
 {
-  "name": "mercado-do-bairro",
+  "name": "mercadinho-da-praca",
   "version": "1.0.0",
   "private": true,
-  "description": "Mercado do Bairro — e-commerce de mercado com landing page, autenticação e painel do cliente.",
+  "description": "Mercadinho da Praça — e-commerce de mercado com landing page, autenticação e painel do cliente.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

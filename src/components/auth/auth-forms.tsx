@@ -6,10 +6,19 @@ import { useRouter } from "next/navigation";
 import { useAccount } from "@/components/providers/account-provider";
 import { IconArrowRight, IconCheck, IconLeaf, IconTruck } from "@/components/ui/icons";
 import { demoAccounts } from "@/data/demo-accounts";
-import { maskPhone } from "@/lib/validation";
-import { formatPrice } from "@/lib/format";
+import {
+  maskPhone,
+  passwordStrength,
+  validateEmail,
+  validateName,
+  validatePassword,
+  validatePhone,
+} from "@/lib/validation";
 
-type Mode = "entrar" | "criar";
+/** Campos que podem receber erro em cada formulário. */
+type SignUpField = "name" | "email" | "phone" | "password" | "terms";
+type SignInField = "name" | "email" | "password";
+type FieldErrors<T extends string> = Partial<Record<T, string>>;
 
 /** Formulário de cadastro usado em /criar-conta. */
 export function SignUpForm() {
@@ -22,20 +31,36 @@ export function SignUpForm() {
   const [password, setPassword] = useState("");
   const [terms, setTerms] = useState(false);
   const [acceptNews, setAcceptNews] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<FieldErrors<SignUpField>>({});
+  const [formError, setFormError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [strength, setStrength] = useState(0);
+
+  const strength = passwordStrength(password);
+
+  /** Valida todos os campos e devolve o mapa de erros (vazio se estiver tudo certo). */
+  function collectErrors(): FieldErrors<SignUpField> {
+    const next: FieldErrors<SignUpField> = {};
+    const nameError = validateName(name);
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
+    const phoneError = validatePhone(phone);
+
+    if (nameError) next.name = nameError;
+    if (emailError) next.email = emailError;
+    if (phoneError) next.phone = phoneError;
+    if (passwordError) next.password = passwordError;
+    if (!terms) next.terms = "É preciso aceitar os termos para criar a conta.";
+    return next;
+  }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError(null);
+    setFormError(null);
 
-    if (name.trim().split(" ").length < 2) {
-      setError("Informe nome e sobrenome para emitirmos a nota fiscal.");
-      return;
-    }
-    if (!terms) {
-      setError("É preciso aceitar os termos para criar a conta.");
+    const found = collectErrors();
+    setErrors(found);
+    if (Object.keys(found).length > 0) {
+      focusFirstError(found);
       return;
     }
 
@@ -43,15 +68,25 @@ export function SignUpForm() {
     try {
       const result = await register({ name, email, password, phone });
       if (!result.ok) {
-        setError(result.error.message);
+        setFormError(result.error.message);
         setBusy(false);
         return;
       }
       router.push("/painel");
     } catch {
-      setError("Não foi possível criar a conta agora. Tente novamente em instantes.");
+      setFormError("Não foi possível criar a conta agora. Tente novamente em instantes.");
       setBusy(false);
     }
+  }
+
+  /** Revalida um campo assim que a pessoa corrige, para o erro sumir na hora. */
+  function clearError(field: SignUpField) {
+    setErrors((current) => {
+      if (!current[field]) return current;
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
   }
 
   return (
@@ -72,9 +107,9 @@ export function SignUpForm() {
         </Link>
       </div>
 
-      {error && (
+      {formError && (
         <p className="alert" role="alert">
-          {error}
+          {formError}
         </p>
       )}
 
@@ -87,11 +122,21 @@ export function SignUpForm() {
             id="nome"
             className="input"
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(event) => {
+              setName(event.target.value);
+              clearError("name");
+            }}
             autoComplete="name"
             placeholder="Ex.: Marina Souza"
+            aria-invalid={errors.name ? "true" : undefined}
+            aria-describedby={errors.name ? "erro-nome" : undefined}
             required
           />
+          {errors.name && (
+            <span className="field-error" id="erro-nome">
+              {errors.name}
+            </span>
+          )}
         </div>
 
         <div className="field">
@@ -103,11 +148,21 @@ export function SignUpForm() {
             className="input"
             type="email"
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              clearError("email");
+            }}
             autoComplete="email"
             placeholder="voce@exemplo.com"
+            aria-invalid={errors.email ? "true" : undefined}
+            aria-describedby={errors.email ? "erro-email" : undefined}
             required
           />
+          {errors.email && (
+            <span className="field-error" id="erro-email">
+              {errors.email}
+            </span>
+          )}
         </div>
 
         <div className="field">
@@ -118,55 +173,74 @@ export function SignUpForm() {
             id="telefone"
             className="input"
             value={phone}
-            onChange={(event) => setPhone(maskPhone(event.target.value))}
+            onChange={(event) => {
+              setPhone(maskPhone(event.target.value));
+              clearError("phone");
+            }}
             autoComplete="tel"
             placeholder="(48) 99999-0000"
             inputMode="tel"
+            aria-invalid={errors.phone ? "true" : undefined}
+            aria-describedby={errors.phone ? "erro-telefone" : undefined}
           />
-          <span className="field-hint">Usamos apenas para avisar sobre a entrega.</span>
+          {errors.phone ? (
+            <span className="field-error" id="erro-telefone">
+              {errors.phone}
+            </span>
+          ) : (
+            <span className="field-hint">Usamos apenas para avisar sobre a entrega.</span>
+          )}
         </div>
 
         <div className="field">
           <label className="field-label" htmlFor="senha">
             Senha
           </label>
-          <input
+          <PasswordInput
             id="senha"
-            className="input"
-            type="password"
             value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-              setStrength(scorePassword(event.target.value));
+            onChange={(value) => {
+              setPassword(value);
+              clearError("password");
             }}
             autoComplete="new-password"
             placeholder="Mínimo de 8 caracteres"
-            required
+            strength={strength}
+            invalid={Boolean(errors.password)}
+            describedBy={errors.password ? "erro-senha" : undefined}
           />
-          <div className="password-meter" aria-hidden="true">
-            {[0, 1, 2, 3].map((index) => (
-              <i
-                key={index}
-                data-on={index < strength && strength >= 2}
-                data-low={index < strength && strength < 2}
-              />
-            ))}
-          </div>
-          <span className="field-hint">
-            Use letras e números. Senhas longas são mais seguras que senhas curtas e complexas.
-          </span>
+          {errors.password ? (
+            <span className="field-error" id="erro-senha">
+              {errors.password}
+            </span>
+          ) : (
+            <span className="field-hint">
+              Use letras e números. Senhas longas são mais seguras que senhas curtas e complexas.
+            </span>
+          )}
         </div>
 
         <label className="checkbox">
           <input
+            id="termos"
             type="checkbox"
             checked={terms}
-            onChange={(event) => setTerms(event.target.checked)}
+            onChange={(event) => {
+              setTerms(event.target.checked);
+              clearError("terms");
+            }}
+            aria-invalid={errors.terms ? "true" : undefined}
+            aria-describedby={errors.terms ? "erro-termos" : undefined}
           />
           <span>
-            Li e aceito os termos de uso e a política de privacidade do Mercado do Bairro.
+            Li e aceito os termos de uso e a política de privacidade do Mercadinho da Pra�a.
           </span>
         </label>
+        {errors.terms && (
+          <span className="field-error" id="erro-termos">
+            {errors.terms}
+          </span>
+        )}
 
         <label className="checkbox">
           <input
@@ -174,7 +248,13 @@ export function SignUpForm() {
             checked={acceptNews}
             onChange={(event) => setAcceptNews(event.target.checked)}
           />
-          <span>Quero receber a lista de ofertas da semana por e-mail.</span>
+          <span>
+            Concordo em receber ofertas e comunicações promocionais, de acordo com a{" "}
+            <Link className="btn-link" href="/">
+              política de privacidade
+            </Link>
+            .
+          </span>
         </label>
 
         <button type="submit" className="btn btn-primary btn-block" disabled={busy}>
@@ -183,40 +263,70 @@ export function SignUpForm() {
         </button>
 
         <p className="field-hint">
-          Já tem conta? <Link className="btn-link" href="/entrar">Entrar</Link>
+          Já tem conta?{" "}
+          <Link className="btn-link" href="/entrar">
+            Entrar
+          </Link>
         </p>
       </form>
     </div>
   );
 }
 
-/** Formulário de acesso usado em /entrar. */
+/** Formulário de acesso usado em /entrar, com alternância entre entrar e criar. */
 export function SignInForm() {
   const { signInWithPassword, register } = useAccount();
   const router = useRouter();
 
-  const [mode, setMode] = useState<Mode>("entrar");
+  const [mode, setMode] = useState<"entrar" | "criar">("entrar");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<FieldErrors<SignInField>>({});
+  const [formError, setFormError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  const strength = passwordStrength(password);
+  const isSignUp = mode === "criar";
+
+  function collectErrors(): FieldErrors<SignInField> {
+    const next: FieldErrors<SignInField> = {};
+
+    // Na ordem em que os campos aparecem na tela, para o foco ir ao primeiro erro.
+    if (isSignUp) {
+      const nameError = validateName(name);
+      if (nameError) next.name = nameError;
+    }
+
+    const emailError = validateEmail(email);
+    if (emailError) next.email = emailError;
+
+    if (isSignUp) {
+      const passwordError = validatePassword(password);
+      if (passwordError) next.password = passwordError;
+    } else if (!password) {
+      next.password = "Informe sua senha.";
+    }
+    return next;
+  }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError(null);
+    setFormError(null);
 
-    if (mode === "criar" && name.trim().split(" ").length < 2) {
-      setError("Informe nome e sobrenome para criar a conta.");
+    const found = collectErrors();
+    setErrors(found);
+    if (Object.keys(found).length > 0) {
+      focusFirstError(found);
       return;
     }
 
     setBusy(true);
     try {
-      if (mode === "criar") {
+      if (isSignUp) {
         const created = await register({ name, email, password });
         if (!created.ok) {
-          setError(created.error.message);
+          setFormError(created.error.message);
           setBusy(false);
           return;
         }
@@ -226,54 +336,71 @@ export function SignInForm() {
 
       const result = await signInWithPassword(email, password);
       if (!result.ok) {
-        setError(result.error.message);
+        setFormError(result.error.message);
         setBusy(false);
         return;
       }
       router.push("/painel");
     } catch {
-      setError("Algo saiu do previsto no acesso. Tente novamente.");
+      setFormError("Algo saiu do previsto no acesso. Tente novamente.");
       setBusy(false);
     }
+  }
+
+  function clearError(field: SignInField) {
+    setErrors((current) => {
+      if (!current[field]) return current;
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+  }
+
+  /** Troca de aba limpando erros e senha, para não misturar os dois fluxos. */
+  function switchMode(nextMode: "entrar" | "criar") {
+    setMode(nextMode);
+    setErrors({});
+    setFormError(null);
+    setPassword("");
   }
 
   return (
     <div className="auth-form-wrap">
       <div className="auth-head">
-        <p className="eyebrow">{mode === "entrar" ? "Bem-vindo de volta" : "Nova conta"}</p>
-        <h1>{mode === "entrar" ? "Entrar na sua conta" : "Criar sua conta"}</h1>
+        <p className="eyebrow">{isSignUp ? "Nova conta" : "Bem-vindo de volta"}</p>
+        <h1>{isSignUp ? "Criar sua conta" : "Entrar na sua conta"}</h1>
         <p>
-          {mode === "entrar"
-            ? "Acesse para repetir a última compra, acompanhar entregas e ver seus pontos."
-            : "Cadastre-se rapidamente para salvar endereços e histórico de pedidos."}
+          {isSignUp
+            ? "Cadastre-se rapidamente para salvar endereços e histórico de pedidos."
+            : "Acesse para repetir a última compra, acompanhar entregas e ver seus pontos."}
         </p>
       </div>
 
       <div className="auth-switch">
         <button
           type="button"
-          aria-current={mode === "entrar" ? "page" : undefined}
-          onClick={() => setMode("entrar")}
+          aria-current={!isSignUp ? "page" : undefined}
+          onClick={() => switchMode("entrar")}
         >
           Entrar
         </button>
         <button
           type="button"
-          aria-current={mode === "criar" ? "page" : undefined}
-          onClick={() => setMode("criar")}
+          aria-current={isSignUp ? "page" : undefined}
+          onClick={() => switchMode("criar")}
         >
           Criar conta
         </button>
       </div>
 
-      {error && (
+      {formError && (
         <p className="alert" role="alert">
-          {error}
+          {formError}
         </p>
       )}
 
       <form className="auth-form" onSubmit={onSubmit} noValidate>
-        {mode === "criar" && (
+        {isSignUp && (
           <div className="field">
             <label className="field-label" htmlFor="acesso-nome">
               Nome completo
@@ -282,10 +409,20 @@ export function SignInForm() {
               id="acesso-nome"
               className="input"
               value={name}
-              onChange={(event) => setName(event.target.value)}
+              onChange={(event) => {
+                setName(event.target.value);
+                clearError("name");
+              }}
               autoComplete="name"
               placeholder="Nome e sobrenome"
+              aria-invalid={errors.name ? "true" : undefined}
+              aria-describedby={errors.name ? "erro-acesso-nome" : undefined}
             />
+            {errors.name && (
+              <span className="field-error" id="erro-acesso-nome">
+                {errors.name}
+              </span>
+            )}
           </div>
         )}
 
@@ -298,46 +435,165 @@ export function SignInForm() {
             className="input"
             type="email"
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              clearError("email");
+            }}
             autoComplete="email"
             placeholder="voce@exemplo.com"
+            aria-invalid={errors.email ? "true" : undefined}
+            aria-describedby={errors.email ? "erro-acesso-email" : undefined}
             required
           />
+          {errors.email && (
+            <span className="field-error" id="erro-acesso-email">
+              {errors.email}
+            </span>
+          )}
         </div>
 
         <div className="field">
           <label className="field-label" htmlFor="acesso-senha">
             Senha
           </label>
-          <input
-            id="acesso-senha"
-            className="input"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            autoComplete={mode === "entrar" ? "current-password" : "new-password"}
-            placeholder="Sua senha"
-            required
-          />
-          {mode === "criar" && <span className="field-hint">Mínimo de 8 caracteres.</span>}
+          {isSignUp ? (
+            <PasswordInput
+              id="acesso-senha"
+              value={password}
+              onChange={(value) => {
+                setPassword(value);
+                clearError("password");
+              }}
+              autoComplete="new-password"
+              placeholder="Mínimo de 8 caracteres"
+              strength={strength}
+              invalid={Boolean(errors.password)}
+              describedBy={errors.password ? "erro-acesso-senha" : undefined}
+            />
+          ) : (
+            <input
+              id="acesso-senha"
+              className="input"
+              type="password"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+                clearError("password");
+              }}
+              autoComplete="current-password"
+              placeholder="Sua senha"
+              aria-invalid={errors.password ? "true" : undefined}
+              aria-describedby={errors.password ? "erro-acesso-senha" : undefined}
+              required
+            />
+          )}
+          {errors.password && (
+            <span className="field-error" id="erro-acesso-senha">
+              {errors.password}
+            </span>
+          )}
         </div>
 
-        {mode === "entrar" && (
-          <div className="field-row" style={{ alignItems: "center" }}>
-            <span className="field-hint">Entre com a senha usada no cadastro para ver seu histórico.</span>
-            <Link href="/criar-conta" className="btn-link" style={{ justifySelf: "end" }}>
-              Não tenho conta
+        {!isSignUp && (
+          <div className="auth-form-foot">
+            <span className="field-hint">
+              Use a mesma senha do cadastro. Qualquer e-mail válido entra na demonstração.
+            </span>
+            <Link className="btn-link" href="/criar-conta">
+              Criar uma conta
             </Link>
           </div>
         )}
 
         <button type="submit" className="btn btn-primary btn-block" disabled={busy}>
-          {busy ? "Verificando…" : mode === "entrar" ? "Entrar" : "Criar conta"}
+          {busy ? "Verificando…" : isSignUp ? "Criar conta" : "Entrar"}
           {!busy && <IconArrowRight />}
         </button>
       </form>
     </div>
   );
+}
+
+/** Campo de senha com botão de mostrar/ocultar e medidor de força. */
+function PasswordInput({
+  id,
+  value,
+  onChange,
+  autoComplete,
+  placeholder,
+  strength,
+  invalid,
+  describedBy,
+}: {
+  id: string;
+  value: string;
+  onChange: (value: string) => void;
+  autoComplete: string;
+  placeholder: string;
+  strength: number;
+  invalid: boolean;
+  describedBy?: string;
+}) {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <>
+      <div className="input-affix">
+        <input
+          id={id}
+          className="input"
+          type={visible ? "text" : "password"}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          autoComplete={autoComplete}
+          placeholder={placeholder}
+          aria-invalid={invalid ? "true" : undefined}
+          aria-describedby={describedBy}
+          required
+        />
+        <button
+          type="button"
+          className="input-affix-btn"
+          onClick={() => setVisible((current) => !current)}
+          aria-label={visible ? "Ocultar senha" : "Mostrar senha"}
+          aria-pressed={visible}
+        >
+          {visible ? "ocultar" : "mostrar"}
+        </button>
+      </div>
+      <div className="password-meter" aria-hidden="true">
+        {[0, 1, 2, 3].map((index) => (
+          <i
+            key={index}
+            data-on={index < strength && strength >= 2}
+            data-low={index < strength && strength < 2}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
+
+/** IDs possíveis de cada campo (tela de cadastro e tela de acesso). */
+const FIELD_IDS: Record<string, string[]> = {
+  name: ["nome", "acesso-nome"],
+  email: ["email", "acesso-email"],
+  phone: ["telefone", "acesso-telefone"],
+  password: ["senha", "acesso-senha"],
+  terms: ["termos"],
+};
+
+/** Move o foco para o primeiro campo com erro, na ordem em que aparecem. */
+function focusFirstError(errors: Record<string, string | undefined>) {
+  const first = Object.keys(errors)[0];
+  if (!first) return;
+  for (const id of FIELD_IDS[first] ?? [first]) {
+    const el = document.getElementById(id);
+    if (el instanceof HTMLElement) {
+      el.focus();
+      return;
+    }
+  }
 }
 
 /** Painel de marca exibido ao lado dos formulários. */
@@ -346,8 +602,8 @@ export function AuthAside() {
     <aside className="auth-brand-side">
       <img src="/img/editorial/hero-mercado.jpg" alt="" aria-hidden="true" />
       <div className="auth-brand-content">
-        <p className="eyebrow" style={{ color: "#c9cdbd" }}>
-          Mercado do Bairro
+        <p className="eyebrow" style={{ color: "#9fb0bf" }}>
+          Mercadinho da Pra�a
         </p>
         <h2>
           Comprar bem é <em>escolher bem</em>.
@@ -383,18 +639,4 @@ export function AuthAside() {
       </div>
     </aside>
   );
-}
-
-export function formatDemoHint(): string {
-  return `Frete grátis acima de ${formatPrice(120)}`;
-}
-
-function scorePassword(value: string): number {
-  if (!value) return 0;
-  let score = 0;
-  if (value.length >= 8) score += 1;
-  if (value.length >= 12) score += 1;
-  if (/[A-Z]/.test(value) && /[a-z]/.test(value)) score += 1;
-  if (/[0-9]/.test(value) && /[^A-Za-z0-9]/.test(value)) score += 1;
-  return Math.min(4, score);
 }

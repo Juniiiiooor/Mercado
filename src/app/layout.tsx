@@ -8,15 +8,15 @@ import { fontClassName } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
-  title: "Mercado do Bairro",
+  title: "Mercadinho da Praça",
   description:
     "Mercado de bairro com frutas, pães, laticínios e mercearia de produtores locais, com entrega no mesmo dia.",
-  applicationName: "Mercado do Bairro",
+  applicationName: "Mercadinho da Praça",
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    siteName: "Mercado do Bairro",
-    title: "Mercado do Bairro",
+    siteName: "Mercadinho da Praça",
+    title: "Mercadinho da Praça",
     description:
       "Compre do produtor da região, receba no mesmo dia. Frutas, pães, laticínios e mercearia.",
   },
@@ -35,6 +35,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: enableJsScript }} />
       </head>
       <body>
+        <div className="bg-atmosphere" aria-hidden="true" />
+        <div className="grain-overlay" aria-hidden="true" />
         <ThemeProvider>
           <AccountProvider>
             <CartProvider>{children}</CartProvider>

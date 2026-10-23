@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { categories } from "@/data/categories";
+import { IconLeaf, IconLock, IconTruck } from "@/components/ui/icons";
 
 export function SiteFooter() {
   return (
@@ -7,9 +8,9 @@ export function SiteFooter() {
       <div className="shell footer-grid">
         <div>
           <Link href="/" className="brand">
-            <span className="brand-mark">mb</span>
+            <span className="brand-mark">mp</span>
             <span>
-              Mercado <em>do</em> Bairro
+              Mercadinho <em>da</em> Praça
             </span>
           </Link>
           <p className="footer-note">
@@ -53,7 +54,7 @@ export function SiteFooter() {
             <li>Segunda a sábado, 7h às 21h</li>
             <li>Domingo, 8h às 14h</li>
             <li>
-              <a href="mailto:oi@mercadodobairro.exemplo">oi@mercadodobairro.exemplo</a>
+              <a href="mailto:oi@mercadinhopraca.exemplo">oi@mercadinhopraca.exemplo</a>
             </li>
             <li>
               <a href="tel:+554832124400">(48) 3212-4400</a>
@@ -62,8 +63,42 @@ export function SiteFooter() {
         </div>
       </div>
 
+      <div className="shell footer-trust">
+        <ul className="footer-trust-list">
+          <li>
+            <IconLock />
+            <span>
+              <b>Conexão segura</b> — dados criptografados
+            </span>
+          </li>
+          <li>
+            <IconTruck />
+            <span>
+              <b>Entrega no mesmo dia</b> — pedidos até 16h
+            </span>
+          </li>
+          <li>
+            <IconLeaf />
+            <span>
+              <b>Produtor local</b> — origem declarada
+            </span>
+          </li>
+        </ul>
+
+        <div className="footer-pay">
+          <span className="footer-pay-label">Pague com</span>
+          <ul className="pay-badges">
+            <li>Pix</li>
+            <li>Visa</li>
+            <li>Mastercard</li>
+            <li>Elo</li>
+            <li>Dinheiro</li>
+          </ul>
+        </div>
+      </div>
+
       <div className="shell footer-bottom">
-        <span>© {new Date().getFullYear()} Mercado do Bairro · Loja demonstrativa</span>
+        <span>© {new Date().getFullYear()} Mercadinho da Praça · Loja demonstrativa</span>
         <span className="mono">Feito com Next.js · Dados salvos no seu navegador</span>
       </div>
     </footer>

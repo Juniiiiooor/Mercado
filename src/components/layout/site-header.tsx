@@ -96,10 +96,10 @@ export function SiteHeader() {
             )}
           </button>
 
-          <Link href="/" className="brand" aria-label="Mercado do Bairro, página inicial">
-            <span className="brand-mark">mb</span>
+          <Link href="/" className="brand" aria-label="Mercadinho da Praça, página inicial">
+            <span className="brand-mark">mp</span>
             <span>
-              Mercado <em>do</em> Bairro
+              Mercadinho <em>da</em> Praça
             </span>
           </Link>
 

@@ -19,29 +19,74 @@ concurrency:
   group: tests-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Passos compartilhados por todos os jobs: baixar o código, preparar o Node e
+# instalar as dependências. Cada job roda em uma máquina limpa, então repete.
+# (Não usamos job de "setup" com artefato para manter simples e rápido.)
 jobs:
-  verify:
-    name: Verificar código
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
-
     steps:
-      - name: Baixar o código
-        uses: actions/checkout@v4
-
-      - name: Preparar o Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
+      - run: npm ci
+      - name: ESLint
+        run: npm run lint
 
-      - name: Instalar dependências
-        run: npm ci
-
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
       - name: Checar tipos (TypeScript)
         run: npm run typecheck
 
-      - name: Lint (ESLint)
-        run: npm run lint
-
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
       - name: Build de produção
         run: npm run build
+
+  security:
+    name: Segurança
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # Relatório informativo: mostra as vulnerabilidades no log, mas não
+      # derruba o pipeline. As pendências atuais são de dependências de
+      # desenvolvimento (transitivas do ESLint), sem correção sem quebra.
+      # Para tornar bloqueante no futuro, use `--audit-level=high` sem o
+      # `continue-on-error`.
+      - name: Auditar dependências (relatório)
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
+  # Portão final: só passa se lint, test, build e segurança passarem.
+  # É este job (com o nome "Verificar código") que a proteção de branch exige.
+  verify:
+    name: Verificar código
+    runs-on: ubuntu-latest
+    needs: [lint, test, build, security]
+    steps:
+      - name: Conferir os checks anteriores
+        run: echo "lint, test, build e segurança passaram — pronto para o deploy."

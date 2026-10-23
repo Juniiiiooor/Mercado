@@ -7,6 +7,7 @@ import { useAccount } from "@/components/providers/account-provider";
 import { useCart } from "@/components/providers/cart-provider";
 import { useTheme } from "@/components/providers/theme-provider";
 import { categories } from "@/data/categories";
+import { CategoryIcon } from "@/components/ui/category-icon";
 import { discountOf, getDeals, getFeaturedProducts, getProduct, products } from "@/data/products";
 import { formatLongDate, formatPrice } from "@/lib/format";
 import { RECENT_STORAGE_KEY } from "@/lib/storage";
@@ -110,9 +111,9 @@ export function DashboardView() {
       <aside className="app-side">
         <div className="app-side-head">
           <Link href="/" className="brand">
-            <span className="brand-mark">mb</span>
+            <span className="brand-mark">mp</span>
             <span>
-              Mercado <em>do</em> Bairro
+              Mercadinho <em>da</em> Praça
             </span>
           </Link>
         </div>
@@ -325,7 +326,7 @@ export function DashboardView() {
                 aria-pressed={category === item.id}
                 onClick={() => setCategory(item.id)}
               >
-                {item.icon} {item.name}
+                <CategoryIcon id={item.id} className="chip-icon" /> {item.name}
               </button>
             ))}
           </div>

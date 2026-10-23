@@ -7,8 +7,8 @@ import "./paginas.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Mercado do Bairro — compras com entrega no mesmo dia",
-    template: "%s · Mercado do Bairro",
+    default: "Mercadinho da Praça — compras com entrega no mesmo dia",
+    template: "%s · Mercadinho da Praça",
   },
   description:
     "Compre frutas, pão de fermentação natural, laticínios e mercearia de produtores da região. Entrega no mesmo dia para pedidos até 16h.",

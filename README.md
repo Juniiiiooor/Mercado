@@ -1,11 +1,11 @@
-# Mercado do Bairro
+# Mercadinho da Praça
 
 E-commerce de mercado com vitrine editorial, autenticação e painel do cliente.
 Projeto construído em **Next.js 16 (App Router) + React 19 + TypeScript**, sem
 backend: os dados de catálogo são estáticos e o estado da conta fica no navegador.
 
 <p align="center">
-  <em>Tema escuro com acento cítrico · tipografia serifada editorial · fotos reais de acervos livres</em>
+  <em>Tema escuro com acento azul-céu · tipografia grotesca editorial · fotos reais de acervos livres</em>
 </p>
 
 ---
@@ -164,14 +164,14 @@ autenticação precisa acontecer no servidor.
 │   │   ├── storage.ts         # acesso seguro ao localStorage
 │   │   ├── use-persistent-state.ts  # estado persistido, hidratação segura
 │   │   ├── use-hydrated-value.ts    # leitura do navegador pós-hidratação
-│   │   ├── fonts.ts            # fontes do Next (Fraunces, Inter, JetBrains Mono)
+│   │   ├── fonts.ts            # fontes do Next (Bricolage Grotesque, Inter, JetBrains Mono)
 │   │   ├── contracts.ts       # tipos da fronteira entre UI e dados
 │   │   └── account-client.ts  # camada que simula a API de conta
 │   │
 │   └── types/domain.ts        # Product, Order, User, Category…
 │
 ├── .github/workflows/
-│   └── test.yml               # CI: typecheck + lint + build
+│   └── test.yml               # CI: lint, test, build, segurança e portão
 │
 ├── eslint.config.mjs
 ├── next.config.ts
@@ -202,20 +202,20 @@ Atalhos com parâmetros: `/mercado?categoria=hortifruti`, `/mercado?busca=azeite
 
 ## Identidade visual
 
-O pedido era **"escuro com acento cítrico"** e uma aparência que não parecesse
+O pedido era **"escuro com acento marcante"** e uma aparência que não parecesse
 template gerado automaticamente. As escolhas abaixo servem a isso.
 
 ### Paleta
 
 | Token | Valor | Uso |
 | --- | --- | --- |
-| `--bg` | `#0b0c0a` | Fundo (quase preto, levemente esverdeado) |
-| `--bg-soft` | `#101210` | Faixas e rodapé |
-| `--panel` | `#161814` | Cartões |
-| `--panel-2` | `#1c1f1a` | Painéis elevados |
-| `--citrus` | `#d7f45c` | Ação principal, preço em oferta, foco |
-| `--citrus-ink` | `#171a10` | Texto sobre o cítrico |
-| `--ink` | `#f4f5ef` | Texto principal |
+| `--bg` | `#080a0d` | Fundo (quase preto, levemente azulado) |
+| `--bg-soft` | `#0d1116` | Faixas e rodapé |
+| `--panel` | `#121820` | Cartões |
+| `--panel-2` | `#172029` | Painéis elevados |
+| `--accent` | `#4fc3f7` | Ação principal, preço em oferta, foco |
+| `--accent-ink` | `#062231` | Texto sobre o azul-céu |
+| `--ink` | `#eef4f8` | Texto principal |
 | `--berry` | `#e2603f` | Erros e selo de desconto |
 | `--gold` | `#e8b53c` | Avaliações |
 
@@ -226,12 +226,12 @@ O tema claro reaproveita os mesmos nomes de token, trocando só os valores —
 
 | Papel | Fonte | Onde aparece |
 | --- | --- | --- |
-| Títulos | **Fraunces** (serifa variável, com eixo *wonk*) | `h1`–`h4`, números grandes |
+| Títulos | **Bricolage Grotesque** (grotesca variável) | `h1`–`h4`, números grandes |
 | Texto e interface | **Inter** | corpo, botões, formulários |
 | Rótulos e dados | **JetBrains Mono** | preços, categorias, IDs de pedido |
 
 Detalhes que afastam o resultado do "cara de IA":
-- Itálico da serifa como acento de ênfase, em vez de gradiente colorido.
+- Itálico como acento de ênfase, em vez de gradiente colorido.
 - Rótulos monoespaçados em caixa alta (`eyebrow`) marcando cada seção.
 - Textura de grão sutil sobre o fundo (SVG `feTurbulence` a 5% de opacidade).
 - Selo circular com texto curvo girando devagar na abertura.
@@ -257,8 +257,13 @@ Pesquisa feita antes de escrever a primeira linha de CSS:
   tom: loja com personalidade em vez de marketplace genérico.
 - **Muzli — Dark mode UI 2026** e **Awwwards 2025–2030** — padrões de fundo
   escuro com acento e uso de tipografia editorial em blocos cinematográficos.
+- **Caitá Supermercados** — referência de *estrutura* de supermercadão: trilha
+  de navegação (breadcrumb), faixa de "conexão segura", selos de pagamento e
+  bloco de atendimento. Aproveitamos o padrão de layout, nunca a marca, as fotos
+  ou os textos: o nome **Mercadinho da Praça** é original e o verde da referência
+  foi trocado pelo azul-céu da nossa paleta.
 
-O que foi deliberadamente descartado por ser "cara de IA": gradientes roxo/azul,
+O que foi deliberadamente descartado por ser "cara de IA": gradientes arco-íris,
 glassmorphism, emojis como ícones de navegação, sombras coloridas difusas e
 títulos em caixa alta com espaçamento exagerado.
 
@@ -373,12 +378,12 @@ Acervos usados: **Wikimedia Commons** (CC0, CC BY, CC BY-SA, domínio público) 
 - Estrutura semântica: `header`, `nav`, `main`, `section` com `aria-labelledby`,
   `footer` e um `skip-link` para o conteúdo.
 - Todo controle é `<button>` ou `<a>` de verdade — nada de `div` clicável.
-- Foco visível em cítrico com `:focus-visible` em todos os elementos.
+- Foco visível em azul-céu com `:focus-visible` em todos os elementos.
 - Carrinho lateral e menu móvel fecham com `Esc`; o fundo não rola enquanto o
   carrinho está aberto.
 - Status do carrinho em `aria-live="polite"`, botões de quantidade com rótulos
   descritivos ("aumentar quantidade de Morango").
-- Contraste: texto claro sobre fundo escuro acima de 7:1; o cítrico é reservado
+- Contraste: texto claro sobre fundo escuro acima de 7:1; o azul-céu é reservado
   para acentos e elementos de ação.
 - `prefers-reduced-motion` desliga o selo giratório e a faixa rolante.
 
@@ -435,21 +440,45 @@ Para ligar o repositório à Vercel:
 
 ## Testes automáticos (GitHub Actions)
 
-O workflow [`.github/workflows/test.yml`](.github/workflows/test.yml) roda sozinho
-a cada `push` e em todo pull request. Ele executa, nesta ordem:
+O workflow [`.github/workflows/test.yml`](.github/workflows/test.yml) roda sozinho a
+cada `push` e em todo pull request. O fluxo é:
 
-1. `npm run typecheck` — checagem de tipos do TypeScript;
-2. `npm run lint` — análise estática do ESLint;
-3. `npm run build` — build de produção, que também pré-renderiza as 25 fichas.
+<p align="center">
+  <img src="public/img/ci-flow.svg" alt="Fluxo: Desenvolvedor → Commit → Push → GitHub Actions (Lint, Test e Build em paralelo) → Segurança → Deploy" width="520">
+</p>
 
-Se qualquer passo falhar, o **check fica vermelho** e o pull request não deve ser
-mesclado. Também há cache do npm e cancelamento automático de execuções antigas da
-mesma branch.
+Em texto, para quem prefere:
+
+```
+Desenvolvedor → Commit → Push → GitHub Actions
+                                     │
+              ┌──────────┬───────────┼───────────┐
+              ▼          ▼           ▼           ▼
+            Lint       Test        Build     Segurança
+              └──────────┴─────┬─────┴───────────┘
+                               ▼
+                      Verificar código
+                               │
+                               ▼
+                            Deploy
+```
+
+- **Lint** — `npm run lint` (ESLint);
+- **Test** — `npm run typecheck` (tipos do TypeScript);
+- **Build** — `npm run build` (build de produção, com as 35 páginas);
+- **Segurança** — `npm audit` em modo informativo (aparece no log, mas não
+  derruba o pipeline: as pendências atuais são de dependências de desenvolvimento,
+  transitivas do ESLint, sem correção sem quebra);
+- **Verificar código** — job final que só passa se os quatro anteriores passarem.
+  É **este** o check exigido pela proteção de branch.
+
+Os jobs de lint, test e build rodam **em paralelo** (mais rápido). Há cache do npm e
+cancelamento automático de execuções antigas da mesma branch.
 
 Para rodar exatamente o que o CI roda, antes de dar `push`:
 
 ```bash
-npm run typecheck && npm run lint && npm run build
+npm run lint && npm run typecheck && npm run build
 ```
 
 ### Bloquear o merge de verdade (proteção de branch)
@@ -462,7 +491,7 @@ GitHub. Configure uma vez, no repositório:
    também).
 3. Marque **Require a pull request before merging**.
 4. Marque **Require status checks to pass before merging** e selecione o check
-   **“Verificar código”** (nome do job do workflow).
+   **“Verificar código”** (nome do job final do workflow).
 5. Salve. A partir daí, um PR só é mesclado com o CI verde.
 
 ---

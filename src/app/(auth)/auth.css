@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Mercado do Bairro — telas de acesso (cadastro / login)
+   Mercadinho da Praça — telas de acesso (cadastro / login)
    Layout em ficha dupla: formulário de um lado, painel de marca do outro.
    ========================================================================== */
 
@@ -57,8 +57,8 @@
 }
 
 .auth-switch a[aria-current="page"] {
-  background: var(--citrus);
-  color: var(--citrus-ink);
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .auth-form {
@@ -90,7 +90,7 @@
 }
 
 .password-meter i[data-on="true"] {
-  background: var(--citrus);
+  background: var(--accent);
 }
 
 .password-meter i[data-low="true"] {
@@ -110,8 +110,8 @@
 }
 
 .alert-ok {
-  border-color: var(--citrus);
-  background: var(--citrus-soft);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 /* ------------------------------------------------------- painel lateral ---- */
@@ -140,7 +140,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(200deg, #0b0c0ae6 10%, #0b0c0a99 55%, #0b0c0aee 100%);
+  background: linear-gradient(200deg, #080a0de6 10%, #080a0d99 55%, #080a0dee 100%);
 }
 
 .auth-brand-content {
@@ -150,7 +150,7 @@
   flex-direction: column;
   gap: 1.4rem;
   margin-top: auto;
-  color: #f4f5ef;
+  color: #eef4f8;
 }
 
 .auth-brand-content h2 {
@@ -159,7 +159,7 @@
 
 .auth-brand-content h2 em {
   font-style: italic;
-  color: var(--citrus);
+  color: var(--accent);
 }
 
 .auth-perks {
@@ -173,13 +173,13 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0.7rem;
-  color: #d7dacd;
+  color: #c3d2de;
 }
 
 .auth-perks svg {
   width: 18px;
   height: 18px;
-  color: var(--citrus);
+  color: var(--accent);
   margin-top: 0.18rem;
 }
 
@@ -190,8 +190,8 @@
   border-radius: var(--radius-sm);
   padding: 0.9rem 1rem;
   font-size: 0.82rem;
-  color: #d7dacd;
-  background: #0b0c0a80;
+  color: #c3d2de;
+  background: #080a0d80;
   backdrop-filter: blur(6px);
 }
 
@@ -200,7 +200,7 @@
   font-size: 0.76rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--citrus);
+  color: var(--accent);
   display: block;
   margin-bottom: 0.4rem;
 }
@@ -230,4 +230,169 @@
   .auth-perks {
     display: none;
   }
+}
+
+/* --------------------------------------------------------- topo/breadcrumb ---- */
+
+.auth-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.auth-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.auth-breadcrumb a {
+  color: var(--ink-2);
+  transition: color 0.16s ease;
+}
+
+.auth-breadcrumb a:hover {
+  color: var(--accent);
+}
+
+.auth-breadcrumb span[aria-current="page"] {
+  color: var(--accent);
+}
+
+/* -------------------------------------------------------- campo com afixo ---- */
+
+.input-affix {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-affix .input {
+  padding-right: 5.6rem;
+}
+
+.input-affix-btn {
+  position: absolute;
+  right: 0.5rem;
+  border: 0;
+  background: none;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.16s ease, background 0.16s ease;
+}
+
+.input-affix-btn:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.auth-form-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+/* ------------------------------------------------------ faixa de confiança ---- */
+
+.auth-footer {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-trust {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--panel-2) 90%, var(--accent) 5%), var(--panel));
+}
+
+.auth-trust-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  align-items: flex-start;
+}
+
+.auth-trust-item svg {
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+  margin-top: 0.18rem;
+}
+
+.auth-trust-item b {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--ink);
+}
+
+.auth-trust-item span {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.auth-trust-pay {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line);
+}
+
+.auth-trust-pay-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.auth-support,
+.auth-legal {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.auth-support strong {
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+.auth-support a,
+.auth-legal a {
+  color: var(--ink-2);
+  border-bottom: 1px solid var(--line-strong);
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.auth-support a:hover,
+.auth-legal a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
 }

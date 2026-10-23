@@ -1,5 +1,5 @@
 /**
- * Modelos de domínio do Mercado do Bairro.
+ * Modelos de domínio do Mercadinho da Praça.
  *
  * Nesta demo os tipos descrevem as entidades usadas tanto no catálogo
  * (dados estáticos em `src/data`) quanto na conta do cliente
@@ -50,8 +50,6 @@ export type Category = {
   name: string;
   slug: string;
   blurb: string;
-  /** Emoji usado como suporte visual; a foto do destaque é sempre editorial. */
-  icon: string;
 };
 
 /** Linha do carrinho. */
